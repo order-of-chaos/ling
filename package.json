@@ -1,0 +1,50 @@
+{
+  "name": "@orderofchaos/ling",
+  "version": "0.0.0",
+  "private": true,
+  "description": "i18n library for React with translation extraction",
+  "scripts": {
+    "build": "pnpm -r build",
+    "clean": "pnpm -r clean",
+    "lint": "eslint packages/*/src/**/*.{ts,tsx} --no-warn-ignored",
+    "lint:fix": "eslint packages/*/src/**/*.{ts,tsx} --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "size": "size-limit",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "size-limit": [
+    {
+      "name": "@orderofchaos/ling-core",
+      "path": "packages/core/dist/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "name": "@orderofchaos/ling-react",
+      "path": "packages/react/dist/index.js",
+      "limit": "4 KB"
+    }
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@eslint/js": "^9.0.0",
+    "@orderofchaos/eslint-plugin-ling": "workspace:*",
+    "@size-limit/preset-small-lib": "^12.1.0",
+    "@testing-library/react": "^14.2.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "happy-dom": "^13.0.0",
+    "size-limit": "^12.1.0",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
