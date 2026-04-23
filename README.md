@@ -1,7 +1,7 @@
 # @orderofchaos/ling
 
 [![CI](https://github.com/order-of-chaos/ling/actions/workflows/ci.yml/badge.svg)](https://github.com/order-of-chaos/ling/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@orderofchaos/ling-react.svg)](https://www.npmjs.com/package/@orderofchaos/ling-react)
+[![npm version](https://img.shields.io/npm/v/@orderofchaos/ling.svg)](https://www.npmjs.com/package/@orderofchaos/ling)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@orderofchaos/ling-react)](https://bundlephobia.com/package/@orderofchaos/ling-react)
 
@@ -45,6 +45,7 @@ The CLI (`ling-scan`) extracts all `t()` calls and generates translation files. 
 
 | Package                                                      | Version                                                                                                                                     | Description                     |
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| [@orderofchaos/ling](./packages/ling)                        | [![npm](https://img.shields.io/npm/v/@orderofchaos/ling.svg)](https://www.npmjs.com/package/@orderofchaos/ling)                             | Complete Ling toolkit           |
 | [@orderofchaos/ling-core](./packages/core)                   | [![npm](https://img.shields.io/npm/v/@orderofchaos/ling-core.svg)](https://www.npmjs.com/package/@orderofchaos/ling-core)                   | Core types and utilities        |
 | [@orderofchaos/ling-react](./packages/react)                 | [![npm](https://img.shields.io/npm/v/@orderofchaos/ling-react.svg)](https://www.npmjs.com/package/@orderofchaos/ling-react)                 | React Provider and hooks        |
 | [@orderofchaos/ling-cli](./packages/cli)                     | [![npm](https://img.shields.io/npm/v/@orderofchaos/ling-cli.svg)](https://www.npmjs.com/package/@orderofchaos/ling-cli)                     | CLI for extracting translations |
@@ -53,17 +54,14 @@ The CLI (`ling-scan`) extracts all `t()` calls and generates translation files. 
 ## Quick Start
 
 ```bash
-# Install React bindings (includes core)
-pnpm add @orderofchaos/ling-react
-
-# Install CLI as dev dependency
-pnpm add -D @orderofchaos/ling-cli
+# Install the full toolkit
+pnpm add @orderofchaos/ling
 ```
 
 ### Setup Provider
 
 ```tsx
-import { I18nProvider, Lang } from "@orderofchaos/ling-react";
+import { I18nProvider, Lang } from "@orderofchaos/ling";
 import { ru } from "./translations/ru";
 import { en } from "./translations/en";
 
@@ -81,7 +79,7 @@ function App() {
 ### Use in Components
 
 ```tsx
-import { initI18nModule } from "@orderofchaos/ling-react";
+import { initI18nModule } from "@orderofchaos/ling";
 
 const { useI18n } = initI18nModule("MyComponent");
 
@@ -113,7 +111,7 @@ pnpm ling-lint ru
 By default, language preference is stored in `localStorage`. You can provide your own storage:
 
 ```tsx
-import { I18nProvider, type I18nStorage } from '@orderofchaos/ling-react';
+import { I18nProvider, type I18nStorage } from '@orderofchaos/ling';
 
 const myStorage: I18nStorage = {
   getLanguage: () => /* get from your storage */,

@@ -5,9 +5,9 @@ import { initI18nModule } from "@orderofchaos/ling-react";
 const { useI18n } = initI18nModule("Installation");
 
 const installCommands = {
-  pnpm: "pnpm add @orderofchaos/ling-react",
-  npm: "npm install @orderofchaos/ling-react",
-  yarn: "yarn add @orderofchaos/ling-react",
+  pnpm: "pnpm add @orderofchaos/ling",
+  npm: "npm install @orderofchaos/ling",
+  yarn: "yarn add @orderofchaos/ling",
 };
 
 export function Installation() {
@@ -81,9 +81,21 @@ export function Installation() {
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3 max-w-4xl mx-auto">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 max-w-6xl mx-auto">
+          <div className="glass rounded-2xl p-6 text-center border-primary-500/50 relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-500 rounded-full text-xs font-semibold text-white">
+              {t("recommended")}
+            </div>
+            <div className="text-base font-bold text-white mb-2 break-words">
+              @orderofchaos/ling
+            </div>
+            <p className="text-sm text-slate-400 mb-4">{t("completeDesc")}</p>
+            <code className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">
+              {t("fullToolkit")}
+            </code>
+          </div>
           <div className="glass rounded-2xl p-6 text-center">
-            <div className="text-2xl font-bold text-white mb-2">
+            <div className="text-base font-bold text-white mb-2 break-words">
               @orderofchaos/ling-core
             </div>
             <p className="text-sm text-slate-400 mb-4">{t("coreDesc")}</p>
@@ -91,11 +103,8 @@ export function Installation() {
               ~1kb gzipped
             </code>
           </div>
-          <div className="glass rounded-2xl p-6 text-center border-primary-500/50 relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-500 rounded-full text-xs font-semibold text-white">
-              Recommended
-            </div>
-            <div className="text-2xl font-bold text-white mb-2">
+          <div className="glass rounded-2xl p-6 text-center">
+            <div className="text-base font-bold text-white mb-2 break-words">
               @orderofchaos/ling-react
             </div>
             <p className="text-sm text-slate-400 mb-4">{t("reactDesc")}</p>
@@ -104,12 +113,21 @@ export function Installation() {
             </code>
           </div>
           <div className="glass rounded-2xl p-6 text-center">
-            <div className="text-2xl font-bold text-white mb-2">
+            <div className="text-base font-bold text-white mb-2 break-words">
               @orderofchaos/ling-cli
             </div>
             <p className="text-sm text-slate-400 mb-4">{t("cliDesc")}</p>
             <code className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">
               ~8kb gzipped
+            </code>
+          </div>
+          <div className="glass rounded-2xl p-6 text-center">
+            <div className="text-base font-bold text-white mb-2 break-words">
+              @orderofchaos/eslint-plugin-ling
+            </div>
+            <p className="text-sm text-slate-400 mb-4">{t("eslintDesc")}</p>
+            <code className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">
+              {t("lintRules")}
             </code>
           </div>
         </div>

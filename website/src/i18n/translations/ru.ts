@@ -114,9 +114,15 @@ export const ru = {
     subtitle: "Установите пакет и начните переводить приложение.",
     copied: "Скопировано!",
     copy: "Копировать",
+    recommended: "Рекомендуется",
+    fullToolkit: "полный набор",
+    lintRules: "lint-правила",
+    completeDesc:
+      "Полный набор: runtime API, CLI и ESLint-правила одной установкой.",
     coreDesc: "Типы, адаптеры хранилища, функция перевода. Без зависимостей.",
     reactDesc: "React-биндинги. Provider, context, хуки. Включает core.",
     cliDesc: "CLI-инструменты для извлечения и линтинга. Dev-зависимость.",
+    eslintDesc: "ESLint-правила для статического анализа ключей перевода.",
   },
   Philosophy: {
     "Key = Text": "Ключ = Текст",

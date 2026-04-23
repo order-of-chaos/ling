@@ -114,10 +114,16 @@ export const en = {
     subtitle: "Install the package and start translating your app.",
     copied: "Copied!",
     copy: "Copy",
+    recommended: "Recommended",
+    fullToolkit: "full toolkit",
+    lintRules: "lint rules",
+    completeDesc:
+      "Full toolkit. Runtime API, CLI, and ESLint rules in one install.",
     coreDesc:
       "Types, storage adapters, translator function. Zero dependencies.",
     reactDesc: "React bindings. Provider, context, hooks. Includes core.",
     cliDesc: "CLI tools for extraction and linting. Dev dependency.",
+    eslintDesc: "ESLint rules for static translation-key analysis.",
   },
   Philosophy: {
     "Key = Text": "Key = Text",

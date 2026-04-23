@@ -1,8 +1,9 @@
 {
-  "name": "@orderofchaos/ling-cli",
+  "name": "@orderofchaos/ling",
   "version": "0.1.0",
-  "description": "CLI for extracting translations from source code",
+  "description": "Complete Ling package with React bindings, core utilities, CLI tools, and ESLint rules",
   "type": "module",
+  "sideEffects": false,
   "bin": {
     "ling": "./dist/bin.js",
     "ling-scan": "./dist/bin.js",
@@ -17,8 +18,16 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./bin": "./dist/bin.js",
-    "./lint": "./dist/lint.js"
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js",
+      "require": "./dist/cli.cjs"
+    },
+    "./eslint-plugin": {
+      "types": "./dist/eslint-plugin.d.ts",
+      "import": "./dist/eslint-plugin.js",
+      "require": "./dist/eslint-plugin.cjs"
+    }
   },
   "files": [
     "dist",
@@ -33,33 +42,42 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
+    "@orderofchaos/eslint-plugin-ling": "workspace:*",
+    "@orderofchaos/ling-cli": "workspace:*",
     "@orderofchaos/ling-core": "workspace:*",
-    "typescript": "^5.5.3"
+    "@orderofchaos/ling-react": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=17"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
     "tsup": "^8.0.0",
     "typescript": "^5.5.3"
   },
   "keywords": [
     "i18n",
-    "cli",
+    "react",
+    "internationalization",
+    "localization",
     "translations",
-    "extract"
+    "cli",
+    "eslint"
   ],
   "author": "Order of Chaos",
   "license": "MIT",
   "engines": {
     "node": ">=18"
   },
-  "homepage": "https://github.com/order-of-chaos/ling/tree/main/packages/cli#readme",
+  "homepage": "https://github.com/order-of-chaos/ling/tree/main/packages/ling#readme",
   "bugs": {
     "url": "https://github.com/order-of-chaos/ling/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/order-of-chaos/ling.git",
-    "directory": "packages/cli"
+    "directory": "packages/ling"
   },
   "publishConfig": {
     "access": "public"

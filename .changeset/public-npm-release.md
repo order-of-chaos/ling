@@ -1,4 +1,5 @@
 ---
+"@orderofchaos/ling": minor
 "@orderofchaos/ling-cli": minor
 "@orderofchaos/ling-core": minor
 "@orderofchaos/ling-react": minor

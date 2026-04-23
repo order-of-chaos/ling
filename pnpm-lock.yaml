@@ -125,6 +125,34 @@ importers:
         specifier: ^1.6.0
         version: 1.6.1(@types/node@20.19.39)(happy-dom@13.10.1)
 
+  packages/ling:
+    dependencies:
+      '@orderofchaos/eslint-plugin-ling':
+        specifier: workspace:*
+        version: link:../eslint-plugin
+      '@orderofchaos/ling-cli':
+        specifier: workspace:*
+        version: link:../cli
+      '@orderofchaos/ling-core':
+        specifier: workspace:*
+        version: link:../core
+      '@orderofchaos/ling-react':
+        specifier: workspace:*
+        version: link:../react
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.0
+        version: 18.3.28
+      react:
+        specifier: ^18.3.0
+        version: 18.3.1
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.1(jiti@1.21.7)(postcss@8.5.10)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.5.3
+        version: 5.9.3
+
   packages/react:
     dependencies:
       '@orderofchaos/ling-core':

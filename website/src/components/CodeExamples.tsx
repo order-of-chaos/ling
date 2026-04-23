@@ -15,7 +15,7 @@ const examples: Example[] = [
     id: "basic",
     titleKey: "basicUsage",
     descKey: "basicUsageDesc",
-    code: `import { I18nProvider, initI18nModule, Lang } from '@orderofchaos/ling-react';
+    code: `import { I18nProvider, initI18nModule, Lang } from '@orderofchaos/ling';
 
 // Initialize module for component
 const { useI18n } = initI18nModule('Greeting');
@@ -73,7 +73,7 @@ export const ru = {
     id: "storage",
     titleKey: "customStorage",
     descKey: "customStorageDesc",
-    code: `import { createLocalStorage, createMemoryStorage } from '@orderofchaos/ling-core';
+    code: `import { createLocalStorage, createMemoryStorage } from '@orderofchaos/ling';
 
 // localStorage (default, persists across sessions)
 const localStorage = createLocalStorage({ key: 'my_app_lang' });
@@ -102,8 +102,8 @@ const asyncStorage: I18nStorage = {
     id: "cli",
     titleKey: "cliExtraction",
     descKey: "cliExtractionDesc",
-    code: `# Install CLI
-pnpm add -D @orderofchaos/ling-cli
+    code: `# Install Ling
+pnpm add @orderofchaos/ling
 
 # Scan source code for t() calls
 pnpm ling-scan src
