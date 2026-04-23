@@ -74,13 +74,10 @@ jobs:
       - name: Build
         run: pnpm build:packages
 
-      - name: Remove stale empty Changesets release branch
+      - name: Remove stale Changesets release branch
         run: |
           if git ls-remote --exit-code --heads origin changeset-release/master >/dev/null 2>&1; then
-            git fetch origin changeset-release/master
-            if [ "$(git rev-parse FETCH_HEAD)" = "$(git rev-parse HEAD)" ]; then
-              git push origin --delete changeset-release/master
-            fi
+            git push origin --delete changeset-release/master
           fi
 
       - name: Create Release Pull Request or Publish

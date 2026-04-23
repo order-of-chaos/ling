@@ -7,6 +7,8 @@
 
 A modern, lightweight i18n library for React with automatic translation extraction.
 
+Documentation and examples: https://order-of-chaos.github.io/ling/
+
 ## Features
 
 - 🪶 **Lightweight** — ~3kb gzipped, zero runtime dependencies
