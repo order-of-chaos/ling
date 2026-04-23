@@ -19,7 +19,7 @@
     "pack:packages": "pnpm build:packages && pnpm -r --filter './packages/*' pack --pack-destination /tmp/orderofchaos-ling-pack",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "pnpm build:packages && changeset publish"
+    "release": "pnpm build:packages && pnpm -r --filter './packages/*' publish --access public --no-git-checks"
   },
   "size-limit": [
     {
