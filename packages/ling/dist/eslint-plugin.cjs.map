@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/eslint-plugin.ts"],"sourcesContent":["import lingPlugin from '@orderofchaos/eslint-plugin-ling';\n\nexport default lingPlugin;\n"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,gCAAuB;AAEvB,IAAO,wBAAQ,0BAAAA;","names":["lingPlugin"]}
