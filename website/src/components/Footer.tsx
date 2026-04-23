@@ -42,7 +42,7 @@ export function Footer() {
               {t("docs")}
             </a>
             <a
-              href="https://github.com/orderofchaos/ling"
+              href="https://github.com/order-of-chaos/ling"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-white transition-colors"

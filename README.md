@@ -1,6 +1,6 @@
 # @orderofchaos/ling
 
-[![CI](https://github.com/nicetomytyuk/orderofchaos-ling/actions/workflows/ci.yml/badge.svg)](https://github.com/nicetomytyuk/orderofchaos-ling/actions/workflows/ci.yml)
+[![CI](https://github.com/order-of-chaos/ling/actions/workflows/ci.yml/badge.svg)](https://github.com/order-of-chaos/ling/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@orderofchaos/ling-react.svg)](https://www.npmjs.com/package/@orderofchaos/ling-react)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@orderofchaos/ling-react)](https://bundlephobia.com/package/@orderofchaos/ling-react)

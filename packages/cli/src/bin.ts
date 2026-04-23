@@ -3,6 +3,7 @@ import * as path from 'path';
 
 import { scanDirectory } from './scanner/scanDirectory';
 import { sortObjectKeys } from './utils/sortObjectKeys';
+import { loadTranslationsFile } from './utils/loadTranslations';
 import type { ScanResult } from './scanner/types';
 
 interface Config {
@@ -62,8 +63,10 @@ async function processLocale(
 
   if (fs.existsSync(localePath)) {
     try {
-      const module = await import(path.resolve(localePath));
-      previousResult = module.default || module[locale] || {};
+      previousResult = await loadTranslationsFile(
+        path.resolve(localePath),
+        locale
+      );
     } catch {
       // File exists but couldn't be imported
     }

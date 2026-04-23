@@ -5,6 +5,14 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import ling from '@orderofchaos/eslint-plugin-ling';
 
 export default tseslint.config(
+  {
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      '**/.pnpm-store/**',
+      '**/*.config.{js,ts,mjs}',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -41,12 +49,9 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      '**/dist/**',
-      '**/node_modules/**',
-      '**/*.test.{ts,tsx}',
-      '**/examples/**',
-      '**/*.config.{js,ts,mjs}',
-    ],
+    files: ['packages/cli/src/bin.ts', 'packages/cli/src/lint.ts'],
+    rules: {
+      'no-console': 'off',
+    },
   }
 );

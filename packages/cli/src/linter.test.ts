@@ -109,4 +109,26 @@ describe("findMissingTranslations", () => {
     expect(result.missing[0].language).toBe("ru");
     expect(result.missing[0].key).toBe("Hello");
   });
+
+  it("should support custom string language codes", () => {
+    const translations = {
+      en: {
+        Header: {
+          Hello: "Hello",
+        },
+      },
+      de: {
+        Header: {},
+      },
+    };
+
+    const result = findMissingTranslations(translations, "en");
+
+    expect(result.total).toBe(1);
+    expect(result.missing[0]).toEqual({
+      language: "de",
+      namespace: "Header",
+      key: "Hello",
+    });
+  });
 });

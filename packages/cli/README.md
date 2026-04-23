@@ -52,11 +52,11 @@ The scanner finds all calls to `t()` function in your code:
 
 ```tsx
 // src/components/Header.tsx
-const { useI18n } = initI18nModule('Header');
+const { useI18n } = initI18nModule("Header");
 
 function Header() {
   const { t } = useI18n();
-  return <h1>{t('Welcome to our app')}</h1>;
+  return <h1>{t("Welcome to our app")}</h1>;
 }
 ```
 
@@ -65,35 +65,100 @@ Running `ling-scan` generates:
 ```typescript
 // src/i18n/translations/ru.ts
 export const ru = {
-  "Header": {
-    "Welcome to our app": "Welcome to our app"
-  }
+  Header: {
+    "Welcome to our app": "Welcome to our app",
+  },
 };
 
-// src/i18n/translations/en.ts  
+// src/i18n/translations/en.ts
 export const en = {
-  "Header": {
-    "Welcome to our app": "Welcome to our app"
-  }
+  Header: {
+    "Welcome to our app": "Welcome to our app",
+  },
 };
 ```
 
 Then translate the values manually or with a tool.
 
+## CI & Pre-commit Integration
+
+### Pre-commit Hook (Husky + lint-staged)
+
+Catch missing translations before commit:
+
+```bash
+# Install
+pnpm add -D husky lint-staged
+pnpm husky init
+```
+
+Add to `package.json`:
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "pnpm ling-scan src",
+      "pnpm ling-lint en src/i18n/translations"
+    ]
+  }
+}
+```
+
+Add hook `.husky/pre-commit`:
+
+```bash
+pnpm lint-staged
+```
+
+### GitHub Actions
+
+Add translation check to CI:
+
+```yaml
+# .github/workflows/ci.yml
+jobs:
+  lint-translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm ling-lint en src/i18n/translations
+```
+
+### npm Scripts
+
+Add convenience scripts to `package.json`:
+
+```json
+{
+  "scripts": {
+    "i18n:scan": "ling-scan src",
+    "i18n:lint": "ling-lint en src/i18n/translations",
+    "i18n:check": "pnpm i18n:scan && pnpm i18n:lint"
+  }
+}
+```
+
 ## Programmatic API
 
 ```typescript
-import { scanDirectory, findMissingTranslations } from '@orderofchaos/ling-cli';
+import { scanDirectory, findMissingTranslations } from "@orderofchaos/ling-cli";
 
 // Scan directory
-const result = scanDirectory('./src', {
-  extensions: ['ts', 'tsx'],
-  translatorFunction: 't',
-  moduleInitFunction: 'initI18nModule',
+const result = scanDirectory("./src", {
+  extensions: ["ts", "tsx"],
+  translatorFunction: "t",
+  moduleInitFunction: "initI18nModule",
 });
 
 // Check for missing translations
-const lint = findMissingTranslations(translations, 'ru');
+const lint = findMissingTranslations(translations, "ru");
 console.log(lint.missing);
 ```
 

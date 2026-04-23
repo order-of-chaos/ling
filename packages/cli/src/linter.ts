@@ -1,4 +1,4 @@
-import type { Lang, Translations } from '@orderofchaos/ling-core';
+import type { Translations } from '@orderofchaos/ling-core';
 
 export interface LintResult {
   missing: Array<{
@@ -10,13 +10,13 @@ export interface LintResult {
 }
 
 export function findMissingTranslations(
-  translations: Record<Lang, Translations>,
-  defaultLanguage: Lang
+  translations: Record<string, Translations>,
+  defaultLanguage: string
 ): LintResult {
-  const defaultTranslations = translations[defaultLanguage];
+  const defaultTranslations = translations[defaultLanguage] ?? {};
   const missing: LintResult['missing'] = [];
 
-  for (const lang of Object.keys(translations) as Lang[]) {
+  for (const lang of Object.keys(translations)) {
     if (lang === defaultLanguage) continue;
 
     const currentTranslations = translations[lang];

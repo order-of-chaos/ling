@@ -2,13 +2,26 @@
   "name": "@orderofchaos/eslint-plugin-ling",
   "version": "0.1.0",
   "description": "ESLint plugin for @orderofchaos/ling-react",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm clean && tsc",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit",
+    "lint:types": "tsc --noEmit",
+    "prepack": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -32,13 +45,16 @@
   },
   "author": "Order of Chaos",
   "license": "MIT",
-  "homepage": "https://github.com/nicetomytyuk/orderofchaos-ling/tree/main/packages/eslint-plugin#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "homepage": "https://github.com/order-of-chaos/ling/tree/main/packages/eslint-plugin#readme",
   "bugs": {
-    "url": "https://github.com/nicetomytyuk/orderofchaos-ling/issues"
+    "url": "https://github.com/order-of-chaos/ling/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nicetomytyuk/orderofchaos-ling.git",
+    "url": "https://github.com/order-of-chaos/ling.git",
     "directory": "packages/eslint-plugin"
   },
   "publishConfig": {

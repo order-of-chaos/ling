@@ -3,7 +3,7 @@ import requireLiteralKeys from './rules/require-literal-keys';
 const plugin = {
   meta: {
     name: '@orderofchaos/eslint-plugin-ling',
-    version: '0.0.1',
+    version: '0.1.0',
   },
   rules: {
     'require-literal-keys': requireLiteralKeys,

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X, Github, Languages } from "lucide-react";
 import { Lang, initI18nModule } from "@orderofchaos/ling-react";
 
-const { useI18n } = initI18nModule("Header");
+const { useI18n } = initI18nModule<Lang>("Header");
 
 const languageLabels: Record<Lang, string> = {
   [Lang.en]: "🇬🇧 EN",
@@ -10,7 +10,7 @@ const languageLabels: Record<Lang, string> = {
   [Lang.pt]: "🇧🇷 PT",
 };
 
-const languages = [Lang.en, Lang.ru, Lang.pt];
+const languages: Lang[] = [Lang.en, Lang.ru, Lang.pt];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -60,7 +60,7 @@ export function Header() {
               {languageLabels[language]}
             </button>
             <a
-              href="https://github.com/nicksheffield/orderofchaos-ling"
+              href="https://github.com/order-of-chaos/ling"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"

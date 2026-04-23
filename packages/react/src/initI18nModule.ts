@@ -1,24 +1,28 @@
 import { useCallback, useMemo } from "react";
 
 import { createTranslator, createNoun } from "@orderofchaos/ling-core";
-import type { TranslateFunction, PluralForms } from "@orderofchaos/ling-core";
+import type {
+  DefaultLang,
+  PluralForms,
+  TranslateFunction,
+} from "@orderofchaos/ling-core";
 
 import { useI18nContext } from "./I18nContext";
 
 export type NounFunction = <T>(count: number, forms: PluralForms<T>) => T;
 
-export interface UseI18nResult {
+export interface UseI18nResult<L extends string = DefaultLang> {
   t: TranslateFunction;
   noun: NounFunction;
-  language: string;
-  changeLanguage: (lang: string) => void;
+  language: L;
+  changeLanguage: (lang: L) => void;
 }
 
-export interface I18nModule {
+export interface I18nModule<L extends string = DefaultLang> {
   /**
    * Hook for use in React components
    */
-  useI18n: () => UseI18nResult;
+  useI18n: () => UseI18nResult<L>;
 }
 
 /**
@@ -37,9 +41,11 @@ export interface I18nModule {
  * }
  * ```
  */
-export function initI18nModule(namespace: string): I18nModule {
-  const useI18n = (): UseI18nResult => {
-    const { language, translations, changeLanguage } = useI18nContext();
+export function initI18nModule<L extends string = DefaultLang>(
+  namespace: string,
+): I18nModule<L> {
+  const useI18n = (): UseI18nResult<L> => {
+    const { language, translations, changeLanguage } = useI18nContext<L>();
 
     const t = useCallback(
       (key: string, replace?: Record<string, string | number>): string => {

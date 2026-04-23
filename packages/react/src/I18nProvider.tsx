@@ -8,7 +8,7 @@ import {
   type DefaultLang,
 } from "@orderofchaos/ling-core";
 
-import { I18nContext } from "./I18nContext";
+import { I18nContext, type I18nContextValue } from "./I18nContext";
 
 export interface I18nProviderProps<L extends string = DefaultLang> {
   children: ReactNode;
@@ -113,11 +113,13 @@ export function I18nProvider<L extends string = DefaultLang>({
         translations,
         storage,
         changeLanguage,
-      }) as unknown as import("./I18nContext").I18nContextValue,
+      }) satisfies I18nContextValue<L>,
     [language, translations, storage, changeLanguage],
   );
 
   return (
-    <I18nContext.Provider value={contextValue}>{children}</I18nContext.Provider>
+    <I18nContext.Provider value={contextValue as unknown as I18nContextValue}>
+      {children}
+    </I18nContext.Provider>
   );
 }

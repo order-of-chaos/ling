@@ -199,7 +199,7 @@ export function Documentation() {
 
         <div className="mt-16 text-center">
           <a
-            href="https://github.com/orderofchaos/ling"
+            href="https://github.com/order-of-chaos/ling"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 px-8 py-4 text-lg font-semibold text-white shadow-2xl shadow-primary-500/25 transition-all hover:shadow-primary-500/40"

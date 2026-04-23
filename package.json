@@ -2,19 +2,24 @@
   "name": "@orderofchaos/ling",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "pnpm@10.13.1",
   "description": "i18n library for React with translation extraction",
   "scripts": {
     "build": "pnpm -r build",
+    "build:packages": "pnpm -r --filter './packages/*' build",
     "clean": "pnpm -r clean",
-    "lint": "eslint packages/*/src/**/*.{ts,tsx} --no-warn-ignored",
-    "lint:fix": "eslint packages/*/src/**/*.{ts,tsx} --fix",
+    "lint": "pnpm build:packages && pnpm lint:eslint && pnpm -r --if-present lint:types",
+    "lint:eslint": "eslint . --no-warn-ignored --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "lint:types": "pnpm build:packages && pnpm -r --if-present lint:types",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "size": "size-limit",
+    "pack:packages": "pnpm build:packages && pnpm -r --filter './packages/*' pack --pack-destination /tmp/orderofchaos-ling-pack",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build:packages && changeset publish"
   },
   "size-limit": [
     {

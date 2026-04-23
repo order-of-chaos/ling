@@ -16,15 +16,16 @@ pnpm add @orderofchaos/ling-core
 
 ```typescript
 import type {
-  Lang,
-  ILang,
+  DefaultLang,
   Translations,
   I18nStorage,
 } from "@orderofchaos/ling-core";
+import { Lang, LangNames } from "@orderofchaos/ling-core";
 ```
 
-- `Lang` - Enum of supported languages (`ru`, `en`)
-- `ILang` - Object with language string values
+- `DefaultLang` - Union of common ISO 639-1 language codes
+- `Lang` - Backward-compatible enum for `ru`, `en`, and `pt`
+- `LangNames` - Human-readable names for common languages
 - `Translations` - Translation dictionary structure
 - `I18nStorage` - Interface for custom storage adapters
 

@@ -13,7 +13,7 @@ export const translations: Record<Lang, Translations> = {
   [Lang.pt]: pt,
 };
 
-export const storage = createLocalStorage({
+export const storage = createLocalStorage<Lang>({
   key: "ling-website-lang",
 });
 
