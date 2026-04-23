@@ -2,6 +2,19 @@
 
 CLI tools for extracting and validating translations.
 
+## Ecosystem
+
+- Marketing site: https://order-of-chaos.github.io/ling/
+- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- GitHub: https://github.com/order-of-chaos/ling
+
+| Package | Purpose |
+| --- | --- |
+| [@orderofchaos/ling-core](https://www.npmjs.com/package/@orderofchaos/ling-core) | Core types, storage adapters, translators, and pluralization utilities. |
+| [@orderofchaos/ling-react](https://www.npmjs.com/package/@orderofchaos/ling-react) | React provider, hooks, and module helpers for Ling apps. |
+| [@orderofchaos/ling-cli](https://www.npmjs.com/package/@orderofchaos/ling-cli) | CLI tools for extracting and validating translation files. |
+| [@orderofchaos/eslint-plugin-ling](https://www.npmjs.com/package/@orderofchaos/eslint-plugin-ling) | ESLint rules that keep translation keys statically analyzable. |
+
 ## Installation
 
 ```bash

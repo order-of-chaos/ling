@@ -5,6 +5,19 @@ ESLint plugin for enforcing best practices with @orderofchaos/ling.
 [![npm version](https://img.shields.io/npm/v/@orderofchaos/eslint-plugin-ling.svg)](https://www.npmjs.com/package/@orderofchaos/eslint-plugin-ling)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## Ecosystem
+
+- Marketing site: https://order-of-chaos.github.io/ling/
+- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- GitHub: https://github.com/order-of-chaos/ling
+
+| Package | Purpose |
+| --- | --- |
+| [@orderofchaos/ling-core](https://www.npmjs.com/package/@orderofchaos/ling-core) | Core types, storage adapters, translators, and pluralization utilities. |
+| [@orderofchaos/ling-react](https://www.npmjs.com/package/@orderofchaos/ling-react) | React provider, hooks, and module helpers for Ling apps. |
+| [@orderofchaos/ling-cli](https://www.npmjs.com/package/@orderofchaos/ling-cli) | CLI tools for extracting and validating translation files. |
+| [@orderofchaos/eslint-plugin-ling](https://www.npmjs.com/package/@orderofchaos/eslint-plugin-ling) | ESLint rules that keep translation keys statically analyzable. |
+
 ## Installation
 
 ```bash
