@@ -1,6 +1,6 @@
 {
   "name": "@orderofchaos/ling-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Core i18n types and utilities",
   "type": "module",
   "sideEffects": false,
