@@ -5,7 +5,10 @@ Core types and utilities for the @orderofchaos/ling i18n library.
 ## Ecosystem
 
 - Marketing site: https://order-of-chaos.github.io/ling/
-- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- Core runtime API: https://order-of-chaos.github.io/ling/docs/api-reference/#core-runtime-api
+- Custom storage: https://order-of-chaos.github.io/ling/docs/custom-storage/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples/core-only
 - GitHub: https://github.com/order-of-chaos/ling
 
 | Package | Purpose |
@@ -22,7 +25,7 @@ Core types and utilities for the @orderofchaos/ling i18n library.
 pnpm add @orderofchaos/ling-core
 ```
 
-> **Note**: Most users should install `@orderofchaos/ling-react` instead, which re-exports everything from core.
+> **Note**: Most users should install `@orderofchaos/ling` or `@orderofchaos/ling-react` unless they specifically want the vanilla runtime only.
 
 ## API
 

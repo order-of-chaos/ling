@@ -1,5 +1,6 @@
 import { Languages, Github, Heart } from "lucide-react";
 import { initI18nModule } from "@orderofchaos/ling-react";
+import { siteLinks } from "../siteLinks";
 
 const { useI18n } = initI18nModule("Footer");
 
@@ -36,13 +37,13 @@ export function Footer() {
               {t("examples")}
             </a>
             <a
-              href="#documentation"
+              href={siteLinks.docsIndex}
               className="hover:text-white transition-colors"
             >
               {t("docs")}
             </a>
             <a
-              href="https://github.com/order-of-chaos/ling"
+              href={siteLinks.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-white transition-colors"

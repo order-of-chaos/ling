@@ -1,220 +1,231 @@
 # API Reference
 
-## @orderofchaos/ling-react
+## Umbrella Package
+
+`@orderofchaos/ling` re-exports the full public runtime surface from `@orderofchaos/ling-core` and `@orderofchaos/ling-react`.
+
+It also exposes:
+
+- CLI helpers from `@orderofchaos/ling/cli`
+- ESLint plugin entrypoint from `@orderofchaos/ling/eslint-plugin`
+- executable commands `ling`, `ling-scan`, and `ling-lint`
+
+```tsx
+import {
+  I18nProvider,
+  initI18nModule,
+  createTranslator,
+  createLocalStorage,
+  createMemoryStorage,
+  noun,
+  createNoun,
+} from "@orderofchaos/ling";
+```
+
+## React API
 
 ### `<I18nProvider>`
-
-The context provider that enables i18n in your React app.
 
 ```tsx
 <I18nProvider
   translations={translations}
-  defaultLanguage={Lang.en}
+  defaultLanguage="en"
   storage={customStorage}
-  supportedLanguages={[Lang.en, Lang.ru]}
+  supportedLanguages={["en", "ru"]}
 >
   <App />
 </I18nProvider>
 ```
 
-#### Props
-
 | Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `translations` | `Record<Lang, Translations>` | **required** | All translations for all languages |
-| `defaultLanguage` | `Lang` | `Lang.en` | Fallback language |
-| `storage` | `I18nStorage` | localStorage adapter | Custom storage for language persistence |
-| `supportedLanguages` | `Lang[]` | `[Lang.en, Lang.ru]` | Languages to check in browser detection |
-| `children` | `ReactNode` | **required** | Child components |
-
----
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | required | Rendered subtree |
+| `translations` | `Record<L, Translations>` | required | All translations keyed by language |
+| `defaultLanguage` | `L` | `"en"` | Fallback language |
+| `storage` | `I18nStorage<L>` | `createLocalStorage()` | Persistence adapter |
+| `supportedLanguages` | `L[]` | `Object.keys(translations)` | Languages used for browser auto-detection |
 
 ### `initI18nModule(namespace)`
 
-Creates a translation module for a component or feature.
+Creates a namespace-bound React hook:
 
-```typescript
-const { useI18n } = initI18nModule('MyComponent');
+```ts
+const { useI18n } = initI18nModule<"en" | "ru">("Checkout");
 ```
 
-#### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `namespace` | `string` | The namespace key in translations object |
-
-#### Returns
+`useI18n()` returns:
 
 | Property | Type | Description |
-|----------|------|-------------|
-| `useI18n` | `() => I18nModule` | Hook to access translations |
-
----
-
-### `useI18n()`
-
-Hook returned by `initI18nModule`. Provides translation function and language controls.
-
-```typescript
-const { t, language, changeLanguage } = useI18n();
-```
-
-#### Returns
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `t` | `(key: string, replace?: Record<string, string \| number>) => string` | Translation function |
-| `language` | `Lang` | Current language |
-| `changeLanguage` | `(lang: Lang) => void` | Change current language |
-
----
+| --- | --- | --- |
+| `t` | `TranslateFunction` | Translate a key inside the module namespace |
+| `noun` | `NounFunction` | Locale-aware plural form selector |
+| `language` | `L` | Current language |
+| `changeLanguage` | `(lang: L) => void` | Persist and switch language |
 
 ### `useI18nContext()`
 
-Low-level hook to access the i18n context directly.
+Low-level hook for direct access to context values:
 
-```typescript
-const { language, translations, storage, changeLanguage } = useI18nContext();
+```ts
+const { language, translations, storage, changeLanguage } =
+  useI18nContext<"en" | "ru">();
 ```
 
----
+## Core Runtime API
 
-## @orderofchaos/ling-core
+### `DefaultLang`
 
-### Types
+`DefaultLang` is a union of common ISO 639-1 language codes such as:
 
-```typescript
-// Supported languages
-enum Lang {
-  ru = 'ru',
-  en = 'en',
-}
+```ts
+type DefaultLang =
+  | "en"
+  | "ru"
+  | "pt"
+  | "zh"
+  | "ja"
+  | "ko"
+  | "es"
+  | "fr"
+  | "de"
+  | "it"
+  | "...";
+```
 
-// Translation structure
+Use `DefaultLang` when the built-in set is enough. Otherwise define your own language union.
+
+### `Translations`
+
+```ts
 interface Translations {
   [namespace: string]: {
     [key: string]: string;
   };
 }
+```
 
-// Storage interface
-interface I18nStorage {
-  getLanguage(): Lang | null;
-  setLanguage(lang: Lang): void;
-  subscribe?(callback: (lang: Lang | null) => void): () => void;
-}
+### `I18nStorage<L extends string = string>`
 
-// Language name mapping
-interface ILang {
-  ru: string;
-  en: string;
+```ts
+interface I18nStorage<L extends string = string> {
+  getLanguage(): L | null;
+  setLanguage(lang: L): void;
+  subscribe?(callback: (lang: L | null) => void): () => void;
 }
 ```
 
----
+### `LocalStorageLangKey`
+
+Default storage key used by `createLocalStorage()`:
+
+```ts
+const LocalStorageLangKey = "orderofchaos:ling/language";
+```
 
 ### `createLocalStorage(options?)`
 
-Creates a localStorage-based storage adapter.
-
-```typescript
-const storage = createLocalStorage({ key: 'my_lang_key' });
+```ts
+const storage = createLocalStorage<"en" | "ru">({
+  key: "my-app-language",
+});
 ```
 
-#### Options
+| Option | Type | Default |
+| --- | --- | --- |
+| `key` | `string` | `"orderofchaos:ling/language"` |
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `key` | `string` | `'MA_lang'` | localStorage key |
+### `createMemoryStorage(initialLang?)`
 
----
+Useful for SSR, tests, and fully custom state flows:
 
-### `createMemoryStorage(defaultLang)`
-
-Creates an in-memory storage adapter. Useful for SSR or testing.
-
-```typescript
-const storage = createMemoryStorage(Lang.en);
+```ts
+const storage = createMemoryStorage<"en" | "ru">("en");
 ```
-
----
 
 ### `createTranslator(options)`
 
-Creates a translator function for standalone use.
-
-```typescript
+```ts
 const t = createTranslator({
   translations,
-  namespace: 'MyComponent',
-  getLanguage: () => currentLang,
+  namespace: "Checkout",
+  getLanguage: () => currentLanguage,
+  onMissingKey: (namespace, key) => {
+    console.warn("Missing translation", namespace, key);
+  },
 });
 
-t('Hello'); // => 'Привет'
-t('Hello, {{name}}!', { name: 'World' }); // => 'Привет, World!'
+t("Pay now");
+t("Total: {{count}}", { count: 3 });
 ```
 
-#### Options
-
 | Option | Type | Description |
-|--------|------|-------------|
-| `translations` | `Record<Lang, Translations>` | All translations |
-| `namespace` | `string` | Component namespace |
-| `getLanguage` | `() => Lang` | Function to get current language |
+| --- | --- | --- |
+| `translations` | `Record<string, Translations>` | All language dictionaries |
+| `namespace` | `string` | Namespace used inside each language dictionary |
+| `getLanguage` | `() => string` | Current language getter |
+| `onMissingKey` | `(namespace: string, key: string) => void` | Optional missing-key callback |
 
----
+### `noun(count, forms, locale?)`
 
-## @orderofchaos/ling-cli
+Selects the correct plural form using `Intl.PluralRules`:
+
+```ts
+noun(1, { one: "item", other: "items" }, "en");
+noun(5, { one: "tovar", few: "tovara", many: "tovarov" }, "ru");
+```
+
+### `createNoun(locale)`
+
+Returns a locale-bound plural selector:
+
+```ts
+const nounRu = createNoun("ru");
+const label = nounRu(3, {
+  one: "tovar",
+  few: "tovara",
+  many: "tovarov",
+});
+```
+
+## CLI API
 
 ### `scanDirectory(path, options?)`
 
-Scans a directory for translation calls.
-
-```typescript
-const result = scanDirectory('./src', {
-  extensions: ['ts', 'tsx'],
-  translatorFunction: 't',
-  moduleInitFunction: 'initI18nModule',
+```ts
+const result = scanDirectory("./src", {
+  extensions: ["ts", "tsx"],
+  translatorFunction: "t",
+  moduleInitFunction: "initI18nModule",
 });
 ```
 
-#### Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `extensions` | `string[]` | `['ts', 'tsx']` | File extensions to scan |
-| `translatorFunction` | `string` | `'t'` | Name of the translation function |
-| `moduleInitFunction` | `string` | `'initI18nModule'` | Name of the module init function |
-
----
+| Option | Type | Default |
+| --- | --- | --- |
+| `extensions` | `string[]` | `["ts", "tsx"]` |
+| `translatorFunction` | `string` | `"t"` |
+| `moduleInitFunction` | `string` | `"initI18nModule"` |
 
 ### `scanFile(path, options?)`
 
-Scans a single file for translation calls.
+Scans a single file for namespaces and literal translation keys:
 
-```typescript
-const result = scanFile('./src/components/Header.tsx');
+```ts
+const result = scanFile("./src/components/Header.tsx");
 ```
-
----
 
 ### `findMissingTranslations(translations, defaultLanguage)`
 
-Checks for missing translations.
+```ts
+const result = findMissingTranslations(translations, "en");
 
-```typescript
-const result = findMissingTranslations(translations, Lang.ru);
-
-if (result.total > 0) {
-  result.missing.forEach(({ language, namespace, key }) => {
-    console.log(`Missing: [${language}] ${namespace}.${key}`);
-  });
+for (const item of result.missing) {
+  console.log(`[${item.language}] ${item.namespace}.${item.key}`);
 }
 ```
 
-#### Returns
+Return type:
 
-```typescript
+```ts
 interface LintResult {
   missing: Array<{
     language: string;

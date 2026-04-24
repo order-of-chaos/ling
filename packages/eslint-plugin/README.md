@@ -8,7 +8,9 @@ ESLint plugin for enforcing best practices with @orderofchaos/ling.
 ## Ecosystem
 
 - Marketing site: https://order-of-chaos.github.io/ling/
-- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- ESLint plugin guide: https://order-of-chaos.github.io/ling/docs/eslint-plugin/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples/eslint-flat-config
 - GitHub: https://github.com/order-of-chaos/ling
 
 | Package | Purpose |

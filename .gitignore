@@ -24,6 +24,10 @@ pnpm-debug.log*
 # OS
 .DS_Store
 
+# Generated website docs
+website/public/docs/
+website/public/sitemap.xml
+
 # Lock files (keep pnpm-lock.yaml)
 package-lock.json
 yarn.lock

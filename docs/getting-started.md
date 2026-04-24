@@ -1,108 +1,147 @@
 # Getting Started
 
-## Installation
+## Choose a Package
 
-### For React applications
+For most projects, install the umbrella package:
 
 ```bash
-# npm
-npm install @orderofchaos/ling-react
+pnpm add @orderofchaos/ling
+```
 
-# pnpm
+That gives you:
+
+- React runtime APIs
+- core utilities
+- `ling-scan`
+- `ling-lint`
+- `@orderofchaos/ling/eslint-plugin`
+
+If you want a smaller dependency surface, install the granular packages instead:
+
+```bash
 pnpm add @orderofchaos/ling-react
-
-# yarn
-yarn add @orderofchaos/ling-react
+pnpm add -D @orderofchaos/ling-cli @orderofchaos/eslint-plugin-ling
 ```
 
-### CLI for translation extraction (dev dependency)
+## Create Translation Files
 
-```bash
-pnpm add -D @orderofchaos/ling-cli
-```
-
-## Basic Setup
-
-### 1. Create translation files
-
-Create a directory for your translations, e.g., `src/i18n/translations/`:
-
-```typescript
-// src/i18n/translations/ru.ts
-export const ru = {
-  App: {
-    'Hello World': 'Привет мир',
-    'Welcome, {{name}}!': 'Добро пожаловать, {{name}}!',
-  },
-};
-
-export default ru;
-```
+Create a directory such as `src/i18n/translations/`:
 
 ```typescript
 // src/i18n/translations/en.ts
 export const en = {
   App: {
-    'Hello World': 'Hello World',
-    'Welcome, {{name}}!': 'Welcome, {{name}}!',
+    "Hello World": "Hello World",
+    "Welcome, {{name}}!": "Welcome, {{name}}!",
   },
 };
 
 export default en;
 ```
 
-### 2. Wrap your app with I18nProvider
+```typescript
+// src/i18n/translations/ru.ts
+export const ru = {
+  App: {
+    "Hello World": "Privet mir",
+    "Welcome, {{name}}!": "Dobro pozhalovat, {{name}}!",
+  },
+};
+
+export default ru;
+```
+
+## Wrap the App with `I18nProvider`
 
 ```tsx
 // src/main.tsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { I18nProvider, Lang } from '@orderofchaos/ling-react';
-import App from './App';
-import { ru } from './i18n/translations/ru';
-import { en } from './i18n/translations/en';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  I18nProvider,
+  type Translations,
+} from "@orderofchaos/ling";
 
-const translations = { ru, en };
+import App from "./App";
+import { en } from "./i18n/translations/en";
+import { ru } from "./i18n/translations/ru";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+type AppLang = "en" | "ru";
+
+const translations: Record<AppLang, Translations> = { en, ru };
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+    <I18nProvider<AppLang>
+      translations={translations}
+      defaultLanguage="en"
+      supportedLanguages={["en", "ru"]}
+    >
       <App />
     </I18nProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 ```
 
-### 3. Use translations in components
+## Create a Namespace Module
 
 ```tsx
 // src/App.tsx
-import { initI18nModule, Lang } from '@orderofchaos/ling-react';
+import { initI18nModule } from "@orderofchaos/ling";
 
-// Initialize i18n module for this component
-const { useI18n } = initI18nModule('App');
+const { useI18n } = initI18nModule<"en" | "ru">("App");
 
-function App() {
+export function App() {
   const { t, language, changeLanguage } = useI18n();
 
   return (
     <div>
-      <h1>{t('Hello World')}</h1>
-      <p>{t('Welcome, {{name}}!', { name: 'User' })}</p>
-      
-      <button onClick={() => changeLanguage(Lang.ru)}>
-        Русский
-      </button>
-      <button onClick={() => changeLanguage(Lang.en)}>
-        English
-      </button>
+      <h1>{t("Hello World")}</h1>
+      <p>{t("Welcome, {{name}}!", { name: "User" })}</p>
+      <p>{t("Current language: {{lang}}", { lang: language })}</p>
+
+      <button onClick={() => changeLanguage("ru")}>Russkii</button>
+      <button onClick={() => changeLanguage("en")}>English</button>
     </div>
   );
 }
 ```
 
+## Extract New Keys
+
+`ling-scan` creates or updates translation files by scanning `t("...")` calls.
+
+```bash
+pnpm ling-scan src
+```
+
+Then check for missing translations:
+
+```bash
+pnpm ling-lint en src/i18n/translations
+```
+
+## Add ESLint Guardrails
+
+Use the ESLint plugin to enforce literal translation keys:
+
+```javascript
+// eslint.config.mjs
+import ling from "@orderofchaos/ling/eslint-plugin";
+
+export default [
+  {
+    plugins: { ling },
+    rules: {
+      "ling/require-literal-keys": "error",
+    },
+  },
+];
+```
+
 ## Next Steps
 
-- [Custom Storage](./custom-storage.md) - Learn how to use custom storage for language persistence
-- [CLI Usage](./cli.md) - Learn how to extract translations automatically
-- [API Reference](./api-reference.md) - Full API documentation
+- [API Reference](./api-reference.md)
+- [Custom Storage](./custom-storage.md)
+- [CLI Usage](./cli.md)
+- [ESLint Plugin](./eslint-plugin.md)

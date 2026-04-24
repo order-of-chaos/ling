@@ -1,152 +1,146 @@
 # Custom Storage
 
-By default, `@orderofchaos/ling-react` stores the user's language preference in `localStorage`. However, you can provide your own storage implementation for different use cases.
+By default, `I18nProvider` uses a localStorage adapter with the key `orderofchaos:ling/language`.
 
-## The I18nStorage Interface
+If you need a different persistence mechanism, pass your own `I18nStorage<L>` implementation.
 
-```typescript
-interface I18nStorage {
-  // Get the current language from storage
-  getLanguage(): Lang | null;
-  
-  // Save the language to storage
-  setLanguage(lang: Lang): void;
-  
-  // Optional: Subscribe to language changes (for reactive storages)
-  subscribe?(callback: (lang: Lang | null) => void): () => void;
+## The `I18nStorage` Interface
+
+```ts
+interface I18nStorage<L extends string = string> {
+  getLanguage(): L | null;
+  setLanguage(lang: L): void;
+  subscribe?(callback: (lang: L | null) => void): () => void;
 }
 ```
 
-## Built-in Storage Adapters
+## Built-in Adapters
 
-### localStorage (default)
+### `createLocalStorage()`
 
-```typescript
-import { createLocalStorage } from '@orderofchaos/ling-core';
+```ts
+import { createLocalStorage } from "@orderofchaos/ling";
 
-const storage = createLocalStorage({ key: 'my_app_lang' });
+const storage = createLocalStorage<"en" | "ru">({
+  key: "my-app-language",
+});
 ```
 
-### In-Memory Storage
+### `createMemoryStorage()`
 
-Useful for SSR or testing:
+Useful for tests, SSR, and state you control yourself:
 
-```typescript
-import { createMemoryStorage, Lang } from '@orderofchaos/ling-core';
+```ts
+import { createMemoryStorage } from "@orderofchaos/ling";
 
-const storage = createMemoryStorage(Lang.en);
+const storage = createMemoryStorage<"en" | "ru">("en");
 ```
 
-## Custom Storage Examples
+## AsyncStorage Example
 
-### AsyncStorage (React Native)
+```ts
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { I18nStorage } from "@orderofchaos/ling";
 
-```typescript
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { I18nStorage, Lang } from '@orderofchaos/ling-react';
+type AppLang = "en" | "ru";
 
-let cachedLanguage: Lang | null = null;
+let cachedLanguage: AppLang | null = null;
 
-const asyncStorage: I18nStorage = {
+export const asyncStorage: I18nStorage<AppLang> = {
   getLanguage() {
     return cachedLanguage;
   },
-  
-  setLanguage(lang: Lang) {
+
+  setLanguage(lang) {
     cachedLanguage = lang;
-    AsyncStorage.setItem('app_language', lang);
+    void AsyncStorage.setItem("app_language", lang);
   },
 };
 
-// Load language on app start
-async function initLanguage() {
-  const stored = await AsyncStorage.getItem('app_language');
-  if (stored) {
-    cachedLanguage = stored as Lang;
+export async function hydrateLanguage() {
+  const stored = await AsyncStorage.getItem("app_language");
+  if (stored === "en" || stored === "ru") {
+    cachedLanguage = stored;
   }
 }
 ```
 
-### MobX Reactive Storage
+## Reactive Store Example
 
-```typescript
-import { makeAutoObservable, reaction } from 'mobx';
-import type { I18nStorage, Lang } from '@orderofchaos/ling-react';
+If your state container can notify listeners, implement `subscribe()`:
 
-class LanguageStore {
-  language: Lang = Lang.en;
+```ts
+import { reaction } from "mobx";
+import type { I18nStorage } from "@orderofchaos/ling";
 
-  constructor() {
-    makeAutoObservable(this);
-  }
+type AppLang = "en" | "ru";
 
-  setLanguage(lang: Lang) {
-    this.language = lang;
-  }
-}
-
-const store = new LanguageStore();
-
-const mobxStorage: I18nStorage = {
+const mobxStorage: I18nStorage<AppLang> = {
   getLanguage: () => store.language,
   setLanguage: (lang) => store.setLanguage(lang),
   subscribe: (callback) => {
     return reaction(
       () => store.language,
-      (lang) => callback(lang)
+      (lang) => callback(lang),
     );
   },
 };
 ```
 
-### Cookies Storage
+`I18nProvider` subscribes to this adapter and updates React state when the language changes outside the component tree.
 
-```typescript
-import type { I18nStorage, Lang } from '@orderofchaos/ling-react';
+## Cookie Example
 
-const cookieStorage: I18nStorage = {
+```ts
+import type { I18nStorage } from "@orderofchaos/ling";
+
+type AppLang = "en" | "ru";
+
+const cookieStorage: I18nStorage<AppLang> = {
   getLanguage() {
     const match = document.cookie.match(/language=(\w+)/);
-    return match ? (match[1] as Lang) : null;
+    return match?.[1] === "ru" ? "ru" : match?.[1] === "en" ? "en" : null;
   },
 
-  setLanguage(lang: Lang) {
+  setLanguage(lang) {
     document.cookie = `language=${lang}; path=/; max-age=31536000`;
   },
 };
 ```
 
-### Server-Side Storage (Next.js)
+## Server Bridge Example
 
-```typescript
-import type { I18nStorage, Lang } from '@orderofchaos/ling-react';
+```ts
+import type { I18nStorage } from "@orderofchaos/ling";
 
-// For server components, pass language from server
-const serverStorage: I18nStorage = {
+type AppLang = "en" | "ru";
+
+const serverStorage: I18nStorage<AppLang> = {
   getLanguage() {
-    // This will be called on client only
     return null;
   },
 
-  setLanguage(lang: Lang) {
-    // Update via API call
-    fetch('/api/language', {
-      method: 'POST',
+  setLanguage(lang) {
+    void fetch("/api/language", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({ language: lang }),
     });
   },
 };
 ```
 
-## Using Custom Storage
+## Use Custom Storage in `I18nProvider`
 
 ```tsx
-import { I18nProvider } from '@orderofchaos/ling-react';
+import { I18nProvider } from "@orderofchaos/ling";
 
-<I18nProvider 
-  translations={translations} 
-  storage={myCustomStorage}
->
+<I18nProvider translations={translations} storage={myCustomStorage}>
   <App />
-</I18nProvider>
+</I18nProvider>;
 ```
+
+## Related Docs
+
+- [Getting Started](./getting-started.md)
+- [API Reference](./api-reference.md)

@@ -10,6 +10,28 @@ export const en = {
     cliExtractionDesc: "Auto-extract translation keys",
     title: "See it in action",
     subtitle: "Real-world examples to get you started quickly.",
+    repoExamplesTitle: "Browse repository examples",
+    repoExamplesSubtitle:
+      "Reference setups for runtime-only usage, umbrella install, CLI wiring, and ESLint integration.",
+    basicAppExample: "Basic React app",
+    basicAppExampleDesc:
+      "Minimal provider and namespace setup with @orderofchaos/ling-react.",
+    coreOnlyExample: "Core-only runtime",
+    coreOnlyExampleDesc:
+      "Standalone translator, memory storage, and pluralization without React.",
+    umbrellaExample: "Umbrella package",
+    umbrellaExampleDesc:
+      "Single-package setup using @orderofchaos/ling for runtime and tooling.",
+    customStorageExample: "Custom storage",
+    customStorageExampleDesc:
+      "Storage adapter with subscribe() support for external updates.",
+    cliSetupExample: "CLI setup",
+    cliSetupExampleDesc:
+      "ling.config.json, generated translations, and scan/lint commands.",
+    eslintFlatConfigExample: "ESLint flat config",
+    eslintFlatConfigExampleDesc:
+      "ESLint 9 example with require-literal-keys enabled.",
+    browseAllExamples: "Browse all examples",
   },
   Comparison: {
     feature: "Feature",
@@ -40,18 +62,16 @@ export const en = {
     apiReference: "API Reference",
     customStorage: "Custom Storage",
     cliCommands: "CLI Commands",
+    eslintPlugin: "ESLint Plugin",
     gettingStartedDesc:
       "Installation, basic setup, and your first translation.",
     apiReferenceDesc: "Complete API documentation for all packages.",
     customStorageDesc: "Implement your own storage for any environment.",
     cliCommandsDesc: "Extract translations and lint your i18n setup.",
-    providerDesc: "Root provider component",
-    initModuleDesc: "Create translation module",
-    tFunctionDesc: "Translate text with optional placeholders",
-    storageDesc: "Implement custom storage",
+    eslintPluginDesc:
+      "Static translation-key rules for flat config and legacy ESLint.",
     title: "Learn everything",
     subtitle: "Comprehensive guides and API reference to master Ling.",
-    quickApiReference: "Quick API Reference",
     viewFullDocs: "View Full Documentation",
   },
   Features: {

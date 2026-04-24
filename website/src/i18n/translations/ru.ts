@@ -10,6 +10,28 @@ export const ru = {
     cliExtractionDesc: "Автоматическое извлечение ключей",
     title: "Смотрите в действии",
     subtitle: "Реальные примеры для быстрого старта.",
+    repoExamplesTitle: "Примеры из репозитория",
+    repoExamplesSubtitle:
+      "Готовые reference-настройки для runtime-only, umbrella package, CLI и ESLint.",
+    basicAppExample: "Базовое React-приложение",
+    basicAppExampleDesc:
+      "Минимальная настройка provider и namespace через @orderofchaos/ling-react.",
+    coreOnlyExample: "Только core runtime",
+    coreOnlyExampleDesc:
+      "Отдельный translator, memory storage и плюрализация без React.",
+    umbrellaExample: "Umbrella package",
+    umbrellaExampleDesc:
+      "Установка через один пакет @orderofchaos/ling для runtime и tooling.",
+    customStorageExample: "Пользовательское хранилище",
+    customStorageExampleDesc:
+      "Адаптер хранилища с subscribe() для внешних обновлений.",
+    cliSetupExample: "Настройка CLI",
+    cliSetupExampleDesc:
+      "ling.config.json, generated translations и команды scan/lint.",
+    eslintFlatConfigExample: "ESLint flat config",
+    eslintFlatConfigExampleDesc:
+      "Пример ESLint 9 с включённым require-literal-keys.",
+    browseAllExamples: "Все примеры",
   },
   Comparison: {
     feature: "Функция",
@@ -41,17 +63,15 @@ export const ru = {
     apiReference: "Справочник API",
     customStorage: "Своё хранилище",
     cliCommands: "CLI команды",
+    eslintPlugin: "ESLint плагин",
     gettingStartedDesc: "Установка, базовая настройка и первый перевод.",
     apiReferenceDesc: "Полная документация API для всех пакетов.",
     customStorageDesc: "Реализуйте собственное хранилище для любого окружения.",
     cliCommandsDesc: "Извлечение переводов и линтинг i18n-настроек.",
-    providerDesc: "Корневой компонент-провайдер",
-    initModuleDesc: "Создание модуля переводов",
-    tFunctionDesc: "Перевод текста с опциональными плейсхолдерами",
-    storageDesc: "Реализация своего хранилища",
+    eslintPluginDesc:
+      "Правила для статических translation keys в flat config и legacy ESLint.",
     title: "Изучите всё",
     subtitle: "Подробные руководства и справочник API для освоения Ling.",
-    quickApiReference: "Краткий справочник API",
     viewFullDocs: "Полная документация",
   },
   Features: {

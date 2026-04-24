@@ -50,7 +50,7 @@
   "engines": {
     "node": ">=18"
   },
-  "homepage": "https://github.com/order-of-chaos/ling/tree/main/packages/react#readme",
+  "homepage": "https://order-of-chaos.github.io/ling/docs/getting-started/",
   "bugs": {
     "url": "https://github.com/order-of-chaos/ling/issues"
   },

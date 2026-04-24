@@ -10,6 +10,28 @@ export const pt = {
     cliExtractionDesc: "Extrair chaves de tradução automaticamente",
     title: "Veja em ação",
     subtitle: "Exemplos do mundo real para começar rapidamente.",
+    repoExamplesTitle: "Navegue pelos exemplos do repositório",
+    repoExamplesSubtitle:
+      "Configurações de referência para runtime-only, pacote umbrella, CLI e integração com ESLint.",
+    basicAppExample: "App React básico",
+    basicAppExampleDesc:
+      "Configuração mínima de provider e namespace com @orderofchaos/ling-react.",
+    coreOnlyExample: "Runtime só com core",
+    coreOnlyExampleDesc:
+      "Translator standalone, memory storage e pluralização sem React.",
+    umbrellaExample: "Pacote umbrella",
+    umbrellaExampleDesc:
+      "Configuração com um único pacote usando @orderofchaos/ling.",
+    customStorageExample: "Armazenamento customizado",
+    customStorageExampleDesc:
+      "Adapter com subscribe() para atualizações externas de idioma.",
+    cliSetupExample: "Configuração da CLI",
+    cliSetupExampleDesc:
+      "ling.config.json, traduções geradas e comandos de scan/lint.",
+    eslintFlatConfigExample: "ESLint flat config",
+    eslintFlatConfigExampleDesc:
+      "Exemplo com ESLint 9 e require-literal-keys ativado.",
+    browseAllExamples: "Ver todos os exemplos",
   },
   Comparison: {
     feature: "Recurso",
@@ -41,19 +63,17 @@ export const pt = {
     apiReference: "Referência da API",
     customStorage: "Armazenamento Personalizado",
     cliCommands: "Comandos CLI",
+    eslintPlugin: "Plugin ESLint",
     gettingStartedDesc:
       "Instalação, configuração básica e sua primeira tradução.",
     apiReferenceDesc: "Documentação completa da API para todos os pacotes.",
     customStorageDesc:
       "Implemente seu próprio armazenamento para qualquer ambiente.",
     cliCommandsDesc: "Extraia traduções e faça lint da sua configuração i18n.",
-    providerDesc: "Componente provider raiz",
-    initModuleDesc: "Criar módulo de tradução",
-    tFunctionDesc: "Traduzir texto com placeholders opcionais",
-    storageDesc: "Implementar armazenamento personalizado",
+    eslintPluginDesc:
+      "Regras estáticas para chaves de tradução em flat config e ESLint legado.",
     title: "Aprenda tudo",
     subtitle: "Guias abrangentes e referência da API para dominar Ling.",
-    quickApiReference: "Referência Rápida da API",
     viewFullDocs: "Ver Documentação Completa",
   },
   Features: {

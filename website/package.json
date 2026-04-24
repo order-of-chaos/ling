@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "docs:generate": "node ./scripts/generate-doc-pages.mjs",
+    "predev": "pnpm docs:generate",
+    "prebuild": "pnpm docs:generate",
     "dev": "vite",
     "build": "vite build",
     "lint": "pnpm lint:types",

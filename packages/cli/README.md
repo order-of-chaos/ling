@@ -5,7 +5,9 @@ CLI tools for extracting and validating translations.
 ## Ecosystem
 
 - Marketing site: https://order-of-chaos.github.io/ling/
-- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- CLI usage: https://order-of-chaos.github.io/ling/docs/cli/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples/cli-setup
 - GitHub: https://github.com/order-of-chaos/ling
 
 | Package | Purpose |

@@ -7,7 +7,15 @@
 
 A modern, lightweight i18n library for React with automatic translation extraction.
 
-Documentation and examples: https://order-of-chaos.github.io/ling/
+Canonical documentation is written in [`docs/*.md`](./docs) and published to GitHub Pages:
+
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- Getting started: https://order-of-chaos.github.io/ling/docs/getting-started/
+- API reference: https://order-of-chaos.github.io/ling/docs/api-reference/
+- Custom storage: https://order-of-chaos.github.io/ling/docs/custom-storage/
+- CLI usage: https://order-of-chaos.github.io/ling/docs/cli/
+- ESLint plugin: https://order-of-chaos.github.io/ling/docs/eslint-plugin/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples
 
 ## Features
 

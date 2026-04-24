@@ -5,7 +5,13 @@ Complete Ling package with React bindings, core utilities, CLI tools, and ESLint
 ## Ecosystem
 
 - Marketing site: https://order-of-chaos.github.io/ling/
-- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- Getting started: https://order-of-chaos.github.io/ling/docs/getting-started/
+- API reference: https://order-of-chaos.github.io/ling/docs/api-reference/
+- CLI usage: https://order-of-chaos.github.io/ling/docs/cli/
+- Custom storage: https://order-of-chaos.github.io/ling/docs/custom-storage/
+- ESLint plugin: https://order-of-chaos.github.io/ling/docs/eslint-plugin/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples
 - GitHub: https://github.com/order-of-chaos/ling
 
 | Package | Purpose |

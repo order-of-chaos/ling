@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X, Github, Languages } from "lucide-react";
 import { initI18nModule } from "@orderofchaos/ling-react";
 import type { WebsiteLang } from "../i18n";
+import { siteLinks } from "../siteLinks";
 
 const { useI18n } = initI18nModule<WebsiteLang>("Header");
 
@@ -21,7 +22,7 @@ export function Header() {
     { name: t("features"), href: "#features" },
     { name: t("comparison"), href: "#comparison" },
     { name: t("examples"), href: "#examples" },
-    { name: t("docs"), href: "#documentation" },
+    { name: t("docs"), href: siteLinks.docsIndex },
   ];
 
   const toggleLanguage = () => {
@@ -61,7 +62,7 @@ export function Header() {
               {languageLabels[language]}
             </button>
             <a
-              href="https://github.com/order-of-chaos/ling"
+              href={siteLinks.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"

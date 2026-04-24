@@ -1,0 +1,5 @@
+{
+  "outDir": "src/i18n/translations",
+  "locales": ["en", "ru"],
+  "originalLocale": "en"
+}

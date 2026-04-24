@@ -5,7 +5,11 @@ React bindings for the @orderofchaos/ling i18n library.
 ## Ecosystem
 
 - Marketing site: https://order-of-chaos.github.io/ling/
-- Documentation: https://order-of-chaos.github.io/ling/#documentation
+- Documentation index: https://order-of-chaos.github.io/ling/docs/
+- Getting started: https://order-of-chaos.github.io/ling/docs/getting-started/
+- React API: https://order-of-chaos.github.io/ling/docs/api-reference/#react-api
+- Custom storage: https://order-of-chaos.github.io/ling/docs/custom-storage/
+- Examples: https://github.com/order-of-chaos/ling/tree/master/examples/basic
 - GitHub: https://github.com/order-of-chaos/ling
 
 | Package | Purpose |
