@@ -34,12 +34,9 @@ import type {
   Translations,
   I18nStorage,
 } from "@orderofchaos/ling-core";
-import { Lang, LangNames } from "@orderofchaos/ling-core";
 ```
 
 - `DefaultLang` - Union of common ISO 639-1 language codes
-- `Lang` - Backward-compatible enum for `ru`, `en`, and `pt`
-- `LangNames` - Human-readable names for common languages
 - `Translations` - Translation dictionary structure
 - `I18nStorage` - Interface for custom storage adapters
 
@@ -55,7 +52,7 @@ import {
 const storage = createLocalStorage({ key: "my_lang" });
 
 // In-memory (for SSR/testing)
-const memoryStorage = createMemoryStorage(Lang.en);
+const memoryStorage = createMemoryStorage("en");
 ```
 
 ### Translator

@@ -18,8 +18,15 @@
     "size": "size-limit",
     "pack:packages": "pnpm build:packages && pnpm -r --filter './packages/*' pack --pack-destination /tmp/orderofchaos-ling-pack",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "pnpm build:packages && changeset publish"
+    "release:login": "node ./scripts/release.mjs login",
+    "release:whoami": "node ./scripts/release.mjs whoami",
+    "release:status": "node ./scripts/release.mjs status",
+    "release:version": "node ./scripts/release.mjs version",
+    "release:check": "node ./scripts/release.mjs check",
+    "release:publish": "node ./scripts/release.mjs publish",
+    "release:ship": "node ./scripts/release.mjs ship",
+    "version": "pnpm run release:version",
+    "release": "node ./scripts/release.mjs"
   },
   "size-limit": [
     {

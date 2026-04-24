@@ -1,5 +1,4 @@
-export { Lang, LangMap, LangNames, LocalStorageLangKey } from "./types";
-export type { DefaultLang, Translations, I18nStorage } from "./types";
+export * from "./types";
 
 export { createLocalStorage, createMemoryStorage } from "./storage";
 export type { LocalStorageOptions } from "./storage";

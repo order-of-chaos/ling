@@ -1,17 +1,19 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createTranslator } from './translator';
-import { Lang, type Translations } from './types';
+import type { Translations } from './types';
+
+type TestLang = "en" | "ru";
 
 describe('createTranslator', () => {
-  const translations: Record<Lang, Translations> = {
-    [Lang.ru]: {
+  const translations: Record<TestLang, Translations> = {
+    ru: {
       TestComponent: {
         'Hello': 'Привет',
         'Hello, {{name}}!': 'Привет, {{name}}!',
         'You have {{count}} messages': 'У вас {{count}} сообщений',
       },
     },
-    [Lang.en]: {
+    en: {
       TestComponent: {
         'Hello': 'Hello',
         'Hello, {{name}}!': 'Hello, {{name}}!',
@@ -24,7 +26,7 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
-      getLanguage: () => Lang.ru,
+      getLanguage: () => "ru",
     });
 
     expect(t('Hello')).toBe('Привет');
@@ -34,7 +36,7 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
-      getLanguage: () => Lang.ru,
+      getLanguage: () => "ru",
     });
 
     expect(t('Unknown key')).toBe('Unknown key');
@@ -44,7 +46,7 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'UnknownComponent',
-      getLanguage: () => Lang.ru,
+      getLanguage: () => "ru",
     });
 
     expect(t('Hello')).toBe('Hello');
@@ -54,7 +56,7 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
-      getLanguage: () => Lang.ru,
+      getLanguage: () => "ru",
     });
 
     expect(t('Hello, {{name}}!', { name: 'World' })).toBe('Привет, World!');
@@ -64,7 +66,7 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
-      getLanguage: () => Lang.ru,
+      getLanguage: () => "ru",
     });
 
     expect(t('You have {{count}} messages', { count: 5 })).toBe('У вас 5 сообщений');
@@ -74,14 +76,14 @@ describe('createTranslator', () => {
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
-      getLanguage: () => Lang.en,
+      getLanguage: () => "en",
     });
 
     expect(t('You have {{count}} messages', { count: 42 })).toBe('You have 42 messages');
   });
 
   it('should react to language changes', () => {
-    let currentLang = Lang.en;
+    let currentLang: TestLang = "en";
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',
@@ -90,12 +92,12 @@ describe('createTranslator', () => {
 
     expect(t('Hello')).toBe('Hello');
 
-    currentLang = Lang.ru;
+    currentLang = "ru";
     expect(t('Hello')).toBe('Привет');
   });
 
   it('should call getLanguage on each translation', () => {
-    const getLanguage = vi.fn().mockReturnValue(Lang.ru);
+    const getLanguage = vi.fn().mockReturnValue("ru");
     const t = createTranslator({
       translations,
       namespace: 'TestComponent',

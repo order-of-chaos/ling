@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Menu, X, Github, Languages } from "lucide-react";
-import { Lang, initI18nModule } from "@orderofchaos/ling-react";
+import { initI18nModule } from "@orderofchaos/ling-react";
+import type { WebsiteLang } from "../i18n";
 
-const { useI18n } = initI18nModule<Lang>("Header");
+const { useI18n } = initI18nModule<WebsiteLang>("Header");
 
-const languageLabels: Record<Lang, string> = {
-  [Lang.en]: "🇬🇧 EN",
-  [Lang.ru]: "🇷🇺 RU",
-  [Lang.pt]: "🇧🇷 PT",
+const languageLabels: Record<WebsiteLang, string> = {
+  en: "🇬🇧 EN",
+  ru: "🇷🇺 RU",
+  pt: "🇧🇷 PT",
 };
 
-const languages: Lang[] = [Lang.en, Lang.ru, Lang.pt];
+const languages: WebsiteLang[] = ["en", "ru", "pt"];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

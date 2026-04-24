@@ -15,7 +15,7 @@ const examples: Example[] = [
     id: "basic",
     titleKey: "basicUsage",
     descKey: "basicUsageDesc",
-    code: `import { I18nProvider, initI18nModule, Lang } from '@orderofchaos/ling';
+    code: `import { I18nProvider, initI18nModule } from '@orderofchaos/ling';
 
 // Initialize module for component
 const { useI18n } = initI18nModule('Greeting');
@@ -26,7 +26,7 @@ function Greeting() {
   return (
     <div>
       <h1>{t('Hello, World!')}</h1>
-      <button onClick={() => changeLanguage(Lang.ru)}>
+      <button onClick={() => changeLanguage('ru')}>
         🇷🇺
       </button>
     </div>
@@ -36,7 +36,7 @@ function Greeting() {
 // Wrap your app
 function App() {
   return (
-    <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+    <I18nProvider translations={translations} defaultLanguage="en">
       <Greeting />
     </I18nProvider>
   );
@@ -79,7 +79,7 @@ export const ru = {
 const localStorage = createLocalStorage({ key: 'my_app_lang' });
 
 // Memory storage (for SSR or testing)
-const memoryStorage = createMemoryStorage(Lang.en);
+const memoryStorage = createMemoryStorage('en');
 
 // Custom storage (e.g., AsyncStorage for React Native)
 const asyncStorage: I18nStorage = {

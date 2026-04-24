@@ -1,17 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { findMissingTranslations } from "./linter";
-import { Lang } from "@orderofchaos/ling-core";
 
 describe("findMissingTranslations", () => {
   it("should return empty result when all translations are properly translated", () => {
     const translations = {
-      [Lang.ru]: {
+      ru: {
         Header: {
           Hello: "Привет",
           World: "Мир",
         },
       },
-      [Lang.en]: {
+      en: {
         Header: {
           Hello: "Hi",
           World: "Earth",
@@ -19,7 +18,7 @@ describe("findMissingTranslations", () => {
       },
     };
 
-    const result = findMissingTranslations(translations, Lang.ru);
+    const result = findMissingTranslations(translations, "ru");
 
     expect(result.total).toBe(0);
     expect(result.missing).toHaveLength(0);
@@ -27,20 +26,20 @@ describe("findMissingTranslations", () => {
 
   it("should find completely missing translations", () => {
     const translations = {
-      [Lang.ru]: {
+      ru: {
         Header: {
           Hello: "Привет",
           World: "Мир",
         },
       },
-      [Lang.en]: {
+      en: {
         Header: {
           Hello: "Hi",
         },
       },
     };
 
-    const result = findMissingTranslations(translations, Lang.ru);
+    const result = findMissingTranslations(translations, "ru");
 
     expect(result.total).toBe(1);
     expect(result.missing).toEqual([
@@ -50,19 +49,19 @@ describe("findMissingTranslations", () => {
 
   it("should find untranslated keys (value same as key)", () => {
     const translations = {
-      [Lang.ru]: {
+      ru: {
         Header: {
           Hello: "Привет",
         },
       },
-      [Lang.en]: {
+      en: {
         Header: {
           Hello: "Hello",
         },
       },
     };
 
-    const result = findMissingTranslations(translations, Lang.ru);
+    const result = findMissingTranslations(translations, "ru");
 
     expect(result.total).toBe(1);
     expect(result.missing[0]).toEqual({
@@ -74,16 +73,16 @@ describe("findMissingTranslations", () => {
 
   it("should find missing namespace", () => {
     const translations = {
-      [Lang.ru]: {
+      ru: {
         Header: { Title: "Заголовок" },
         Footer: { Copyright: "Копирайт" },
       },
-      [Lang.en]: {
+      en: {
         Header: { Title: "Heading" },
       },
     };
 
-    const result = findMissingTranslations(translations, Lang.ru);
+    const result = findMissingTranslations(translations, "ru");
 
     expect(result.total).toBe(1);
     expect(result.missing).toContainEqual({
@@ -95,15 +94,15 @@ describe("findMissingTranslations", () => {
 
   it("should skip default language when checking", () => {
     const translations = {
-      [Lang.ru]: {
+      ru: {
         Header: { Hello: "Hello" },
       },
-      [Lang.en]: {
+      en: {
         Header: { Hello: "Hi" },
       },
     };
 
-    const result = findMissingTranslations(translations, Lang.en);
+    const result = findMissingTranslations(translations, "en");
 
     expect(result.total).toBe(1);
     expect(result.missing[0].language).toBe("ru");

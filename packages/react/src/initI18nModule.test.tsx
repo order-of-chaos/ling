@@ -2,17 +2,19 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { I18nProvider } from './I18nProvider';
 import { initI18nModule } from './initI18nModule';
-import { Lang, type Translations } from '@orderofchaos/ling-core';
+import type { Translations } from '@orderofchaos/ling-core';
 
-const translations: Record<Lang, Translations> = {
-  [Lang.ru]: {
+type TestLang = "en" | "ru";
+
+const translations: Record<TestLang, Translations> = {
+  ru: {
     MyComponent: {
       'Hello': 'Привет',
       'Hello, {{name}}!': 'Привет, {{name}}!',
       'Count: {{count}}': 'Количество: {{count}}',
     },
   },
-  [Lang.en]: {
+  en: {
     MyComponent: {
       'Hello': 'Hello',
       'Hello, {{name}}!': 'Hello, {{name}}!',
@@ -31,8 +33,8 @@ function TestComponent() {
       <span data-testid="greeting">{t('Hello, {{name}}!', { name: 'World' })}</span>
       <span data-testid="count">{t('Count: {{count}}', { count: 42 })}</span>
       <span data-testid="language">{language}</span>
-      <button onClick={() => changeLanguage(Lang.ru)}>RU</button>
-      <button onClick={() => changeLanguage(Lang.en)}>EN</button>
+      <button onClick={() => changeLanguage("ru")}>RU</button>
+      <button onClick={() => changeLanguage("en")}>EN</button>
     </div>
   );
 }
@@ -40,7 +42,7 @@ function TestComponent() {
 describe('initI18nModule', () => {
   it('should translate text', () => {
     render(
-      <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+      <I18nProvider translations={translations} defaultLanguage="en">
         <TestComponent />
       </I18nProvider>
     );
@@ -50,7 +52,7 @@ describe('initI18nModule', () => {
 
   it('should translate with placeholders', () => {
     render(
-      <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+      <I18nProvider translations={translations} defaultLanguage="en">
         <TestComponent />
       </I18nProvider>
     );
@@ -61,7 +63,7 @@ describe('initI18nModule', () => {
 
   it('should react to language changes', () => {
     render(
-      <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+      <I18nProvider translations={translations} defaultLanguage="en">
         <TestComponent />
       </I18nProvider>
     );
@@ -83,7 +85,7 @@ describe('initI18nModule', () => {
     }
 
     render(
-      <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+      <I18nProvider translations={translations} defaultLanguage="en">
         <UnknownComponent />
       </I18nProvider>
     );

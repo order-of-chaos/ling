@@ -1,4 +1,4 @@
-export const LocalStorageLangKey = "MA_lang";
+export const LocalStorageLangKey = "orderofchaos:ling/language";
 
 /**
  * Default supported languages (ISO 639-1 codes).
@@ -35,45 +35,6 @@ export type DefaultLang =
   | "ro"
   | "hu"
   | "bg";
-
-/**
- * @deprecated Use DefaultLang or define your own language type.
- * Kept for backward compatibility.
- */
-export enum Lang {
-  ru = "ru",
-  en = "en",
-  pt = "pt",
-}
-
-/**
- * Human-readable language names.
- * Add more as needed for your application.
- */
-export const LangNames: Record<string, string> = {
-  en: "English",
-  ru: "Русский",
-  pt: "Português",
-  zh: "中文",
-  ja: "日本語",
-  ko: "한국어",
-  es: "Español",
-  fr: "Français",
-  de: "Deutsch",
-  it: "Italiano",
-  ar: "العربية",
-  hi: "हिन्दी",
-  pl: "Polski",
-  uk: "Українська",
-  tr: "Türkçe",
-  nl: "Nederlands",
-  sv: "Svenska",
-};
-
-/**
- * @deprecated Use LangNames instead.
- */
-export const LangMap = LangNames;
 
 export interface Translations {
   [namespace: string]: {

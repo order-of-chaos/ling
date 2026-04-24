@@ -61,7 +61,7 @@ const apiReference: ApiRef[] = [
     descKey: "providerDesc",
     code: `<I18nProvider
   translations={translations}
-  defaultLanguage={Lang.en}
+  defaultLanguage="en"
   storage={customStorage}
 >
   {children}
@@ -85,10 +85,10 @@ t('Missing key')              // → "Missing key" (fallback)`,
   {
     title: "Storage Interface",
     descKey: "storageDesc",
-    code: `interface I18nStorage {
-  getLanguage(): Lang | null;
-  setLanguage(lang: Lang): void;
-  subscribe?(callback: (lang: Lang | null) => void): () => void;
+    code: `interface I18nStorage<L extends string = string> {
+  getLanguage(): L | null;
+  setLanguage(lang: L): void;
+  subscribe?(callback: (lang: L | null) => void): () => void;
 }`,
   },
 ];

@@ -27,7 +27,7 @@ pnpm add @orderofchaos/ling-react
 ### 1. Setup Provider
 
 ```tsx
-import { I18nProvider, Lang } from "@orderofchaos/ling-react";
+import { I18nProvider } from "@orderofchaos/ling-react";
 import { ru } from "./translations/ru";
 import { en } from "./translations/en";
 
@@ -35,7 +35,7 @@ const translations = { ru, en };
 
 function App() {
   return (
-    <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+    <I18nProvider translations={translations} defaultLanguage="en">
       <YourApp />
     </I18nProvider>
   );
@@ -45,7 +45,7 @@ function App() {
 ### 2. Use in Components
 
 ```tsx
-import { initI18nModule, Lang } from "@orderofchaos/ling-react";
+import { initI18nModule } from "@orderofchaos/ling-react";
 
 const { useI18n } = initI18nModule("MyComponent");
 
@@ -56,7 +56,7 @@ function MyComponent() {
     <div>
       <h1>{t("Hello World")}</h1>
       <p>{t("Items: {{count}}", { count: 5 })}</p>
-      <button onClick={() => changeLanguage(Lang.ru)}>Русский</button>
+      <button onClick={() => changeLanguage("ru")}>Русский</button>
     </div>
   );
 }
@@ -65,7 +65,7 @@ function MyComponent() {
 ### 3. Custom Storage
 
 ```tsx
-import { I18nProvider, type I18nStorage, Lang } from "@orderofchaos/ling-react";
+import { I18nProvider, type I18nStorage } from "@orderofchaos/ling-react";
 
 // Example: AsyncStorage for React Native
 const asyncStorage: I18nStorage = {

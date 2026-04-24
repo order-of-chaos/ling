@@ -61,7 +61,7 @@ pnpm add @orderofchaos/ling
 ### Setup Provider
 
 ```tsx
-import { I18nProvider, Lang } from "@orderofchaos/ling";
+import { I18nProvider } from "@orderofchaos/ling";
 import { ru } from "./translations/ru";
 import { en } from "./translations/en";
 
@@ -69,7 +69,7 @@ const translations = { ru, en };
 
 function App() {
   return (
-    <I18nProvider translations={translations} defaultLanguage={Lang.en}>
+    <I18nProvider translations={translations} defaultLanguage="en">
       <YourApp />
     </I18nProvider>
   );
@@ -90,7 +90,7 @@ function MyComponent() {
     <div>
       <h1>{t("Hello World")}</h1>
       <p>{t("Welcome, {{name}}!", { name: "User" })}</p>
-      <button onClick={() => changeLanguage(Lang.ru)}>Switch to Russian</button>
+      <button onClick={() => changeLanguage("ru")}>Switch to Russian</button>
     </div>
   );
 }
@@ -136,6 +136,11 @@ pnpm build
 # Run type checking
 pnpm lint
 ```
+
+## Release
+
+Release flow is documented in [RELEASING.md](./RELEASING.md).
+The local maintainer entrypoints are `pnpm release:login` and `pnpm release:ship`.
 
 ## License
 

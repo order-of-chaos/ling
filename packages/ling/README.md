@@ -24,10 +24,19 @@ pnpm add @orderofchaos/ling
 
 ## Runtime API
 
-The package re-exports the React and core APIs:
+The package re-exports both the React and vanilla core APIs:
 
 ```tsx
-import { I18nProvider, initI18nModule, Lang } from "@orderofchaos/ling";
+import { I18nProvider, initI18nModule } from "@orderofchaos/ling";
+```
+
+```ts
+import {
+  createTranslator,
+  createLocalStorage,
+  createMemoryStorage,
+  type Translations,
+} from "@orderofchaos/ling";
 ```
 
 ## CLI

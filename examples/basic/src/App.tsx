@@ -1,5 +1,5 @@
 import React from "react";
-import { initI18nModule, Lang } from "@orderofchaos/ling-react";
+import { initI18nModule } from "@orderofchaos/ling-react";
 
 const { useI18n } = initI18nModule("App");
 
@@ -14,12 +14,12 @@ function App() {
 
       <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
         <button
-          onClick={() => changeLanguage(Lang.en)}
+          onClick={() => changeLanguage("en")}
           style={{
             padding: "0.5rem 1rem",
-            fontWeight: language === Lang.en ? "bold" : "normal",
-            backgroundColor: language === Lang.en ? "#007bff" : "#f0f0f0",
-            color: language === Lang.en ? "white" : "black",
+            fontWeight: language === "en" ? "bold" : "normal",
+            backgroundColor: language === "en" ? "#007bff" : "#f0f0f0",
+            color: language === "en" ? "white" : "black",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
@@ -28,12 +28,12 @@ function App() {
           English
         </button>
         <button
-          onClick={() => changeLanguage(Lang.ru)}
+          onClick={() => changeLanguage("ru")}
           style={{
             padding: "0.5rem 1rem",
-            fontWeight: language === Lang.ru ? "bold" : "normal",
-            backgroundColor: language === Lang.ru ? "#007bff" : "#f0f0f0",
-            color: language === Lang.ru ? "white" : "black",
+            fontWeight: language === "ru" ? "bold" : "normal",
+            backgroundColor: language === "ru" ? "#007bff" : "#f0f0f0",
+            color: language === "ru" ? "white" : "black",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",

@@ -95,7 +95,7 @@ function MyComponent() {
     <div>
       <h1>{t('Welcome to our app!')}</h1>
       <p>{t('Hello, {{name}}!', { name: 'World' })}</p>
-      <button onClick={() => changeLanguage(Lang.ru)}>
+      <button onClick={() => changeLanguage('ru')}>
         🇷🇺 Русский
       </button>
     </div>

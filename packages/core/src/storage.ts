@@ -4,7 +4,7 @@ import { LocalStorageLangKey } from "./types";
 export interface LocalStorageOptions {
   /**
    * Storage key name
-   * @default 'MA_lang'
+   * @default 'orderofchaos:ling/language'
    */
   key?: string;
 }
