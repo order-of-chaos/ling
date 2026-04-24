@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/getting-started/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/api-reference/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/custom-storage/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/cli/</loc>
+  </url>
+  <url>
+    <loc>https://order-of-chaos.github.io/ling/docs/eslint-plugin/</loc>
+  </url>
+</urlset>

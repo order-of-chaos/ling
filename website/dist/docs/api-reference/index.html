@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Public runtime, React, core, and CLI API reference for Ling." />
+    <link rel="canonical" href="https://order-of-chaos.github.io/ling/docs/api-reference/" />
+    <meta property="og:title" content="Ling API Reference" />
+    <meta property="og:description" content="Public runtime, React, core, and CLI API reference for Ling." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://order-of-chaos.github.io/ling/docs/api-reference/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Ling API Reference</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #020617;
+        --panel: rgba(15, 23, 42, 0.88);
+        --panel-border: rgba(148, 163, 184, 0.18);
+        --muted: #94a3b8;
+        --text: #e2e8f0;
+        --strong: #f8fafc;
+        --accent: #8b5cf6;
+        --accent-2: #06b6d4;
+        --code: #0f172a;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(139, 92, 246, 0.16), transparent 30%),
+          radial-gradient(circle at top right, rgba(6, 182, 212, 0.1), transparent 26%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        color: #c4b5fd;
+        text-decoration: none;
+      }
+
+      a:hover { color: #ddd6fe; }
+
+      code,
+      pre {
+        font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .shell {
+        width: min(1160px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 32px 0 64px;
+      }
+
+      .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--strong);
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .nav a {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid var(--panel-border);
+        color: var(--text);
+      }
+
+      .hero {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 24px 80px rgba(2, 6, 23, 0.36);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #a78bfa;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: var(--strong);
+      }
+
+      .hero p {
+        margin: 14px 0 0;
+        max-width: 72ch;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .hero-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid var(--panel-border);
+        background: rgba(15, 23, 42, 0.7);
+        color: var(--strong);
+      }
+
+      .hero-actions a.primary {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .doc-card,
+      .toc {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 24px;
+        box-shadow: 0 24px 80px rgba(2, 6, 23, 0.24);
+      }
+
+      .doc-card {
+        padding: 32px;
+        overflow: hidden;
+      }
+
+      .toc {
+        padding: 24px;
+        align-self: start;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+
+      .toc li.toc-level-3 a {
+        padding-left: 16px;
+        color: var(--muted);
+      }
+
+      .doc-card h1,
+      .doc-card h2,
+      .doc-card h3,
+      .doc-card h4 {
+        color: var(--strong);
+        scroll-margin-top: 24px;
+      }
+
+      .doc-card h1:first-child {
+        margin-top: 0;
+      }
+
+      .doc-card p,
+      .doc-card li {
+        color: var(--text);
+        line-height: 1.75;
+      }
+
+      .doc-card ul,
+      .doc-card ol {
+        padding-left: 22px;
+      }
+
+      .doc-card hr {
+        border: 0;
+        border-top: 1px solid var(--panel-border);
+        margin: 32px 0;
+      }
+
+      .doc-card blockquote {
+        margin: 24px 0;
+        padding: 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: rgba(30, 41, 59, 0.55);
+        color: var(--muted);
+      }
+
+      .doc-card :not(pre) > code {
+        padding: 0.15em 0.45em;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        color: #f8fafc;
+      }
+
+      .doc-card pre {
+        margin: 18px 0 24px;
+        padding: 18px;
+        overflow-x: auto;
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        background: var(--code);
+      }
+
+      .doc-card table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0 28px;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .doc-card th,
+      .doc-card td {
+        padding: 12px 14px;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .doc-card th {
+        background: rgba(15, 23, 42, 0.96);
+        color: var(--strong);
+      }
+
+      .doc-card td {
+        background: rgba(15, 23, 42, 0.55);
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (min-width: 980px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr) 280px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: min(100vw - 20px, 100%);
+          padding-top: 20px;
+          padding-bottom: 40px;
+        }
+
+        .hero,
+        .doc-card,
+        .toc {
+          border-radius: 18px;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="../../">
+          <span class="brand-mark">L</span>
+          <span>Ling</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../">Home</a>
+          <a href="../">Docs</a>
+          <a href="https://github.com/order-of-chaos/ling/blob/master/docs/api-reference.md">GitHub Source</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <p class="eyebrow">Generated from docs/*.md</p>
+        <h1>Ling API Reference</h1>
+        <p>Public runtime, React, core, and CLI API reference for Ling.</p>
+        <div class="hero-actions">
+          <a class="primary" href="../">Browse all docs</a>
+          <a href="https://github.com/order-of-chaos/ling/blob/master/docs/api-reference.md">View Markdown source</a>
+        </div>
+      </section>
+
+      <div class="layout">
+        <article class="doc-card">
+          <h1 id="api-reference">API Reference</h1>
+<h2 id="umbrella-package">Umbrella Package</h2>
+<p><code>@orderofchaos/ling</code> re-exports the full public runtime surface from <code>@orderofchaos/ling-core</code> and <code>@orderofchaos/ling-react</code>.</p>
+<p>It also exposes:</p>
+<ul>
+  <li>CLI helpers from <code>@orderofchaos/ling/cli</code></li>
+  <li>ESLint plugin entrypoint from <code>@orderofchaos/ling/eslint-plugin</code></li>
+  <li>executable commands <code>ling</code>, <code>ling-scan</code>, and <code>ling-lint</code></li>
+</ul>
+<pre><code class="language-tsx">import {
+  I18nProvider,
+  initI18nModule,
+  createTranslator,
+  createLocalStorage,
+  createMemoryStorage,
+  noun,
+  createNoun,
+} from &quot;@orderofchaos/ling&quot;;</code></pre>
+<h2 id="react-api">React API</h2>
+<h3 id="i18nprovider"><code>&lt;I18nProvider&gt;</code></h3>
+<pre><code class="language-tsx">&lt;I18nProvider
+  translations={translations}
+  defaultLanguage=&quot;en&quot;
+  storage={customStorage}
+  supportedLanguages={[&quot;en&quot;, &quot;ru&quot;]}
+&gt;
+  &lt;App /&gt;
+&lt;/I18nProvider&gt;</code></pre>
+<p>| Prop | Type | Default | Description | | --- | --- | --- | --- | | <code>children</code> | <code>ReactNode</code> | required | Rendered subtree | | <code>translations</code> | <code>Record&lt;L, Translations&gt;</code> | required | All translations keyed by language | | <code>defaultLanguage</code> | <code>L</code> | <code>&quot;en&quot;</code> | Fallback language | | <code>storage</code> | <code>I18nStorage&lt;L&gt;</code> | <code>createLocalStorage()</code> | Persistence adapter | | <code>supportedLanguages</code> | <code>L[]</code> | <code>Object.keys(translations)</code> | Languages used for browser auto-detection |</p>
+<h3 id="initi18nmodule-namespace"><code>initI18nModule(namespace)</code></h3>
+<p>Creates a namespace-bound React hook:</p>
+<pre><code class="language-ts">const { useI18n } = initI18nModule&lt;&quot;en&quot; | &quot;ru&quot;&gt;(&quot;Checkout&quot;);</code></pre>
+<p><code>useI18n()</code> returns:</p>
+<p>| Property | Type | Description | | --- | --- | --- | | <code>t</code> | <code>TranslateFunction</code> | Translate a key inside the module namespace | | <code>noun</code> | <code>NounFunction</code> | Locale-aware plural form selector | | <code>language</code> | <code>L</code> | Current language | | <code>changeLanguage</code> | <code>(lang: L) =&gt; void</code> | Persist and switch language |</p>
+<h3 id="usei18ncontext"><code>useI18nContext()</code></h3>
+<p>Low-level hook for direct access to context values:</p>
+<pre><code class="language-ts">const { language, translations, storage, changeLanguage } =
+  useI18nContext&lt;&quot;en&quot; | &quot;ru&quot;&gt;();</code></pre>
+<h2 id="core-runtime-api">Core Runtime API</h2>
+<h3 id="defaultlang"><code>DefaultLang</code></h3>
+<p><code>DefaultLang</code> is a union of common ISO 639-1 language codes such as:</p>
+<pre><code class="language-ts">type DefaultLang =
+  | &quot;en&quot;
+  | &quot;ru&quot;
+  | &quot;pt&quot;
+  | &quot;zh&quot;
+  | &quot;ja&quot;
+  | &quot;ko&quot;
+  | &quot;es&quot;
+  | &quot;fr&quot;
+  | &quot;de&quot;
+  | &quot;it&quot;
+  | &quot;...&quot;;</code></pre>
+<p>Use <code>DefaultLang</code> when the built-in set is enough. Otherwise define your own language union.</p>
+<h3 id="translations"><code>Translations</code></h3>
+<pre><code class="language-ts">interface Translations {
+  [namespace: string]: {
+    [key: string]: string;
+  };
+}</code></pre>
+<h3 id="i18nstorage-l-extends-string-string"><code>I18nStorage&lt;L extends string = string&gt;</code></h3>
+<pre><code class="language-ts">interface I18nStorage&lt;L extends string = string&gt; {
+  getLanguage(): L | null;
+  setLanguage(lang: L): void;
+  subscribe?(callback: (lang: L | null) =&gt; void): () =&gt; void;
+}</code></pre>
+<h3 id="localstoragelangkey"><code>LocalStorageLangKey</code></h3>
+<p>Default storage key used by <code>createLocalStorage()</code>:</p>
+<pre><code class="language-ts">const LocalStorageLangKey = &quot;orderofchaos:ling/language&quot;;</code></pre>
+<h3 id="createlocalstorage-options"><code>createLocalStorage(options?)</code></h3>
+<pre><code class="language-ts">const storage = createLocalStorage&lt;&quot;en&quot; | &quot;ru&quot;&gt;({
+  key: &quot;my-app-language&quot;,
+});</code></pre>
+<p>| Option | Type | Default | | --- | --- | --- | | <code>key</code> | <code>string</code> | <code>&quot;orderofchaos:ling/language&quot;</code> |</p>
+<h3 id="creatememorystorage-initiallang"><code>createMemoryStorage(initialLang?)</code></h3>
+<p>Useful for SSR, tests, and fully custom state flows:</p>
+<pre><code class="language-ts">const storage = createMemoryStorage&lt;&quot;en&quot; | &quot;ru&quot;&gt;(&quot;en&quot;);</code></pre>
+<h3 id="createtranslator-options"><code>createTranslator(options)</code></h3>
+<pre><code class="language-ts">const t = createTranslator({
+  translations,
+  namespace: &quot;Checkout&quot;,
+  getLanguage: () =&gt; currentLanguage,
+  onMissingKey: (namespace, key) =&gt; {
+    console.warn(&quot;Missing translation&quot;, namespace, key);
+  },
+});
+
+t(&quot;Pay now&quot;);
+t(&quot;Total: {{count}}&quot;, { count: 3 });</code></pre>
+<p>| Option | Type | Description | | --- | --- | --- | | <code>translations</code> | <code>Record&lt;string, Translations&gt;</code> | All language dictionaries | | <code>namespace</code> | <code>string</code> | Namespace used inside each language dictionary | | <code>getLanguage</code> | <code>() =&gt; string</code> | Current language getter | | <code>onMissingKey</code> | <code>(namespace: string, key: string) =&gt; void</code> | Optional missing-key callback |</p>
+<h3 id="noun-count-forms-locale"><code>noun(count, forms, locale?)</code></h3>
+<p>Selects the correct plural form using <code>Intl.PluralRules</code>:</p>
+<pre><code class="language-ts">noun(1, { one: &quot;item&quot;, other: &quot;items&quot; }, &quot;en&quot;);
+noun(5, { one: &quot;tovar&quot;, few: &quot;tovara&quot;, many: &quot;tovarov&quot; }, &quot;ru&quot;);</code></pre>
+<h3 id="createnoun-locale"><code>createNoun(locale)</code></h3>
+<p>Returns a locale-bound plural selector:</p>
+<pre><code class="language-ts">const nounRu = createNoun(&quot;ru&quot;);
+const label = nounRu(3, {
+  one: &quot;tovar&quot;,
+  few: &quot;tovara&quot;,
+  many: &quot;tovarov&quot;,
+});</code></pre>
+<h2 id="cli-api">CLI API</h2>
+<h3 id="scandirectory-path-options"><code>scanDirectory(path, options?)</code></h3>
+<pre><code class="language-ts">const result = scanDirectory(&quot;./src&quot;, {
+  extensions: [&quot;ts&quot;, &quot;tsx&quot;],
+  translatorFunction: &quot;t&quot;,
+  moduleInitFunction: &quot;initI18nModule&quot;,
+});</code></pre>
+<p>| Option | Type | Default | | --- | --- | --- | | <code>extensions</code> | <code>string[]</code> | <code>[&quot;ts&quot;, &quot;tsx&quot;]</code> | | <code>translatorFunction</code> | <code>string</code> | <code>&quot;t&quot;</code> | | <code>moduleInitFunction</code> | <code>string</code> | <code>&quot;initI18nModule&quot;</code> |</p>
+<h3 id="scanfile-path-options"><code>scanFile(path, options?)</code></h3>
+<p>Scans a single file for namespaces and literal translation keys:</p>
+<pre><code class="language-ts">const result = scanFile(&quot;./src/components/Header.tsx&quot;);</code></pre>
+<h3 id="findmissingtranslations-translations-defaultlanguage"><code>findMissingTranslations(translations, defaultLanguage)</code></h3>
+<pre><code class="language-ts">const result = findMissingTranslations(translations, &quot;en&quot;);
+
+for (const item of result.missing) {
+  console.log(`[${item.language}] ${item.namespace}.${item.key}`);
+}</code></pre>
+<p>Return type:</p>
+<pre><code class="language-ts">interface LintResult {
+  missing: Array&lt;{
+    language: string;
+    namespace: string;
+    key: string;
+  }&gt;;
+  total: number;
+}</code></pre>
+
+          <p class="footer-note">
+            Source of truth: <a href="https://github.com/order-of-chaos/ling/blob/master/docs/api-reference.md">api-reference.md</a>.
+          </p>
+        </article>
+        <aside class="toc">
+  <p class="eyebrow">On this page</p>
+  <ul>
+    <li class="toc-level-2"><a href="#umbrella-package">Umbrella Package</a></li>
+<li class="toc-level-2"><a href="#react-api">React API</a></li>
+<li class="toc-level-3"><a href="#i18nprovider">&lt;I18nProvider&gt;</a></li>
+<li class="toc-level-3"><a href="#initi18nmodule-namespace">initI18nModule(namespace)</a></li>
+<li class="toc-level-3"><a href="#usei18ncontext">useI18nContext()</a></li>
+<li class="toc-level-2"><a href="#core-runtime-api">Core Runtime API</a></li>
+<li class="toc-level-3"><a href="#defaultlang">DefaultLang</a></li>
+<li class="toc-level-3"><a href="#translations">Translations</a></li>
+<li class="toc-level-3"><a href="#i18nstorage-l-extends-string-string">I18nStorage&lt;L extends string = string&gt;</a></li>
+<li class="toc-level-3"><a href="#localstoragelangkey">LocalStorageLangKey</a></li>
+<li class="toc-level-3"><a href="#createlocalstorage-options">createLocalStorage(options?)</a></li>
+<li class="toc-level-3"><a href="#creatememorystorage-initiallang">createMemoryStorage(initialLang?)</a></li>
+<li class="toc-level-3"><a href="#createtranslator-options">createTranslator(options)</a></li>
+<li class="toc-level-3"><a href="#noun-count-forms-locale">noun(count, forms, locale?)</a></li>
+<li class="toc-level-3"><a href="#createnoun-locale">createNoun(locale)</a></li>
+<li class="toc-level-2"><a href="#cli-api">CLI API</a></li>
+<li class="toc-level-3"><a href="#scandirectory-path-options">scanDirectory(path, options?)</a></li>
+<li class="toc-level-3"><a href="#scanfile-path-options">scanFile(path, options?)</a></li>
+<li class="toc-level-3"><a href="#findmissingtranslations-translations-defaultlanguage">findMissingTranslations(translations, defaultLanguage)</a></li>
+  </ul>
+</aside>
+      </div>
+    </div>
+  </body>
+</html>

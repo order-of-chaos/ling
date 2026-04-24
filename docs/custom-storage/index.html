@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Implement custom I18nStorage adapters for browsers, React Native, SSR, and reactive stores." />
+    <link rel="canonical" href="https://order-of-chaos.github.io/ling/docs/custom-storage/" />
+    <meta property="og:title" content="Ling Custom Storage" />
+    <meta property="og:description" content="Implement custom I18nStorage adapters for browsers, React Native, SSR, and reactive stores." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://order-of-chaos.github.io/ling/docs/custom-storage/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Ling Custom Storage</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #020617;
+        --panel: rgba(15, 23, 42, 0.88);
+        --panel-border: rgba(148, 163, 184, 0.18);
+        --muted: #94a3b8;
+        --text: #e2e8f0;
+        --strong: #f8fafc;
+        --accent: #8b5cf6;
+        --accent-2: #06b6d4;
+        --code: #0f172a;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(139, 92, 246, 0.16), transparent 30%),
+          radial-gradient(circle at top right, rgba(6, 182, 212, 0.1), transparent 26%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        color: #c4b5fd;
+        text-decoration: none;
+      }
+
+      a:hover { color: #ddd6fe; }
+
+      code,
+      pre {
+        font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .shell {
+        width: min(1160px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 32px 0 64px;
+      }
+
+      .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--strong);
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .nav a {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid var(--panel-border);
+        color: var(--text);
+      }
+
+      .hero {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 24px 80px rgba(2, 6, 23, 0.36);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #a78bfa;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: var(--strong);
+      }
+
+      .hero p {
+        margin: 14px 0 0;
+        max-width: 72ch;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .hero-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid var(--panel-border);
+        background: rgba(15, 23, 42, 0.7);
+        color: var(--strong);
+      }
+
+      .hero-actions a.primary {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .doc-card,
+      .toc {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 24px;
+        box-shadow: 0 24px 80px rgba(2, 6, 23, 0.24);
+      }
+
+      .doc-card {
+        padding: 32px;
+        overflow: hidden;
+      }
+
+      .toc {
+        padding: 24px;
+        align-self: start;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+
+      .toc li.toc-level-3 a {
+        padding-left: 16px;
+        color: var(--muted);
+      }
+
+      .doc-card h1,
+      .doc-card h2,
+      .doc-card h3,
+      .doc-card h4 {
+        color: var(--strong);
+        scroll-margin-top: 24px;
+      }
+
+      .doc-card h1:first-child {
+        margin-top: 0;
+      }
+
+      .doc-card p,
+      .doc-card li {
+        color: var(--text);
+        line-height: 1.75;
+      }
+
+      .doc-card ul,
+      .doc-card ol {
+        padding-left: 22px;
+      }
+
+      .doc-card hr {
+        border: 0;
+        border-top: 1px solid var(--panel-border);
+        margin: 32px 0;
+      }
+
+      .doc-card blockquote {
+        margin: 24px 0;
+        padding: 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: rgba(30, 41, 59, 0.55);
+        color: var(--muted);
+      }
+
+      .doc-card :not(pre) > code {
+        padding: 0.15em 0.45em;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        color: #f8fafc;
+      }
+
+      .doc-card pre {
+        margin: 18px 0 24px;
+        padding: 18px;
+        overflow-x: auto;
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        background: var(--code);
+      }
+
+      .doc-card table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0 28px;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .doc-card th,
+      .doc-card td {
+        padding: 12px 14px;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .doc-card th {
+        background: rgba(15, 23, 42, 0.96);
+        color: var(--strong);
+      }
+
+      .doc-card td {
+        background: rgba(15, 23, 42, 0.55);
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (min-width: 980px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr) 280px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: min(100vw - 20px, 100%);
+          padding-top: 20px;
+          padding-bottom: 40px;
+        }
+
+        .hero,
+        .doc-card,
+        .toc {
+          border-radius: 18px;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="../../">
+          <span class="brand-mark">L</span>
+          <span>Ling</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../">Home</a>
+          <a href="../">Docs</a>
+          <a href="https://github.com/order-of-chaos/ling/blob/master/docs/custom-storage.md">GitHub Source</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <p class="eyebrow">Generated from docs/*.md</p>
+        <h1>Ling Custom Storage</h1>
+        <p>Implement custom I18nStorage adapters for browsers, React Native, SSR, and reactive stores.</p>
+        <div class="hero-actions">
+          <a class="primary" href="../">Browse all docs</a>
+          <a href="https://github.com/order-of-chaos/ling/blob/master/docs/custom-storage.md">View Markdown source</a>
+        </div>
+      </section>
+
+      <div class="layout">
+        <article class="doc-card">
+          <h1 id="custom-storage">Custom Storage</h1>
+<p>By default, <code>I18nProvider</code> uses a localStorage adapter with the key <code>orderofchaos:ling/language</code>.</p>
+<p>If you need a different persistence mechanism, pass your own <code>I18nStorage&lt;L&gt;</code> implementation.</p>
+<h2 id="the-i18nstorage-interface">The <code>I18nStorage</code> Interface</h2>
+<pre><code class="language-ts">interface I18nStorage&lt;L extends string = string&gt; {
+  getLanguage(): L | null;
+  setLanguage(lang: L): void;
+  subscribe?(callback: (lang: L | null) =&gt; void): () =&gt; void;
+}</code></pre>
+<h2 id="built-in-adapters">Built-in Adapters</h2>
+<h3 id="createlocalstorage"><code>createLocalStorage()</code></h3>
+<pre><code class="language-ts">import { createLocalStorage } from &quot;@orderofchaos/ling&quot;;
+
+const storage = createLocalStorage&lt;&quot;en&quot; | &quot;ru&quot;&gt;({
+  key: &quot;my-app-language&quot;,
+});</code></pre>
+<h3 id="creatememorystorage"><code>createMemoryStorage()</code></h3>
+<p>Useful for tests, SSR, and state you control yourself:</p>
+<pre><code class="language-ts">import { createMemoryStorage } from &quot;@orderofchaos/ling&quot;;
+
+const storage = createMemoryStorage&lt;&quot;en&quot; | &quot;ru&quot;&gt;(&quot;en&quot;);</code></pre>
+<h2 id="asyncstorage-example">AsyncStorage Example</h2>
+<pre><code class="language-ts">import AsyncStorage from &quot;@react-native-async-storage/async-storage&quot;;
+import type { I18nStorage } from &quot;@orderofchaos/ling&quot;;
+
+type AppLang = &quot;en&quot; | &quot;ru&quot;;
+
+let cachedLanguage: AppLang | null = null;
+
+export const asyncStorage: I18nStorage&lt;AppLang&gt; = {
+  getLanguage() {
+    return cachedLanguage;
+  },
+
+  setLanguage(lang) {
+    cachedLanguage = lang;
+    void AsyncStorage.setItem(&quot;app_language&quot;, lang);
+  },
+};
+
+export async function hydrateLanguage() {
+  const stored = await AsyncStorage.getItem(&quot;app_language&quot;);
+  if (stored === &quot;en&quot; || stored === &quot;ru&quot;) {
+    cachedLanguage = stored;
+  }
+}</code></pre>
+<h2 id="reactive-store-example">Reactive Store Example</h2>
+<p>If your state container can notify listeners, implement <code>subscribe()</code>:</p>
+<pre><code class="language-ts">import { reaction } from &quot;mobx&quot;;
+import type { I18nStorage } from &quot;@orderofchaos/ling&quot;;
+
+type AppLang = &quot;en&quot; | &quot;ru&quot;;
+
+const mobxStorage: I18nStorage&lt;AppLang&gt; = {
+  getLanguage: () =&gt; store.language,
+  setLanguage: (lang) =&gt; store.setLanguage(lang),
+  subscribe: (callback) =&gt; {
+    return reaction(
+      () =&gt; store.language,
+      (lang) =&gt; callback(lang),
+    );
+  },
+};</code></pre>
+<p><code>I18nProvider</code> subscribes to this adapter and updates React state when the language changes outside the component tree.</p>
+<h2 id="cookie-example">Cookie Example</h2>
+<pre><code class="language-ts">import type { I18nStorage } from &quot;@orderofchaos/ling&quot;;
+
+type AppLang = &quot;en&quot; | &quot;ru&quot;;
+
+const cookieStorage: I18nStorage&lt;AppLang&gt; = {
+  getLanguage() {
+    const match = document.cookie.match(/language=(\w+)/);
+    return match?.[1] === &quot;ru&quot; ? &quot;ru&quot; : match?.[1] === &quot;en&quot; ? &quot;en&quot; : null;
+  },
+
+  setLanguage(lang) {
+    document.cookie = `language=${lang}; path=/; max-age=31536000`;
+  },
+};</code></pre>
+<h2 id="server-bridge-example">Server Bridge Example</h2>
+<pre><code class="language-ts">import type { I18nStorage } from &quot;@orderofchaos/ling&quot;;
+
+type AppLang = &quot;en&quot; | &quot;ru&quot;;
+
+const serverStorage: I18nStorage&lt;AppLang&gt; = {
+  getLanguage() {
+    return null;
+  },
+
+  setLanguage(lang) {
+    void fetch(&quot;/api/language&quot;, {
+      method: &quot;POST&quot;,
+      headers: { &quot;content-type&quot;: &quot;application/json&quot; },
+      body: JSON.stringify({ language: lang }),
+    });
+  },
+};</code></pre>
+<h2 id="use-custom-storage-in-i18nprovider">Use Custom Storage in <code>I18nProvider</code></h2>
+<pre><code class="language-tsx">import { I18nProvider } from &quot;@orderofchaos/ling&quot;;
+
+&lt;I18nProvider translations={translations} storage={myCustomStorage}&gt;
+  &lt;App /&gt;
+&lt;/I18nProvider&gt;;</code></pre>
+<h2 id="related-docs">Related Docs</h2>
+<ul>
+  <li><a href="../getting-started/">Getting Started</a></li>
+  <li><a href="../api-reference/">API Reference</a></li>
+</ul>
+
+          <p class="footer-note">
+            Source of truth: <a href="https://github.com/order-of-chaos/ling/blob/master/docs/custom-storage.md">custom-storage.md</a>.
+          </p>
+        </article>
+        <aside class="toc">
+  <p class="eyebrow">On this page</p>
+  <ul>
+    <li class="toc-level-2"><a href="#the-i18nstorage-interface">The I18nStorage Interface</a></li>
+<li class="toc-level-2"><a href="#built-in-adapters">Built-in Adapters</a></li>
+<li class="toc-level-3"><a href="#createlocalstorage">createLocalStorage()</a></li>
+<li class="toc-level-3"><a href="#creatememorystorage">createMemoryStorage()</a></li>
+<li class="toc-level-2"><a href="#asyncstorage-example">AsyncStorage Example</a></li>
+<li class="toc-level-2"><a href="#reactive-store-example">Reactive Store Example</a></li>
+<li class="toc-level-2"><a href="#cookie-example">Cookie Example</a></li>
+<li class="toc-level-2"><a href="#server-bridge-example">Server Bridge Example</a></li>
+<li class="toc-level-2"><a href="#use-custom-storage-in-i18nprovider">Use Custom Storage in I18nProvider</a></li>
+<li class="toc-level-2"><a href="#related-docs">Related Docs</a></li>
+  </ul>
+</aside>
+      </div>
+    </div>
+  </body>
+</html>
