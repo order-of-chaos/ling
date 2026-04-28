@@ -1,6 +1,6 @@
 {
   "name": "@orderofchaos/ling",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Complete Ling package with React bindings, core utilities, CLI tools, and ESLint rules",
   "type": "module",
   "sideEffects": false,
