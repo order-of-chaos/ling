@@ -148,4 +148,41 @@ describe('scanNodes', () => {
 
     expect(result).toEqual({ 'Item': 'Item' });
   });
+
+  it('should extract nested keys from translator arguments', () => {
+    const code = `
+      function Component({ isEmbedded, state }) {
+        return (
+          <p>
+            {t('Shell state: {{state}}, {{embedded}}', {
+              embedded: isEmbedded ? t('Embedded') : t('Standalone'),
+              state: state ?? t('Unknown state'),
+            })}
+          </p>
+        );
+      }
+    `;
+
+    const result = scanNodes(parseCode(code), 'test.tsx', code);
+
+    expect(result).toEqual({
+      'Shell state: {{state}}, {{embedded}}':
+        'Shell state: {{state}}, {{embedded}}',
+      Embedded: 'Embedded',
+      Standalone: 'Standalone',
+      'Unknown state': 'Unknown state',
+    });
+  });
+
+  it('should traverse JSX spread attributes', () => {
+    const code = `
+      function Component() {
+        return <Button {...{ title: t('Spread tooltip') }} />;
+      }
+    `;
+
+    const result = scanNodes(parseCode(code), 'test.tsx', code);
+
+    expect(result).toEqual({ 'Spread tooltip': 'Spread tooltip' });
+  });
 });

@@ -31,3 +31,4 @@ website/public/sitemap.xml
 # Lock files (keep pnpm-lock.yaml)
 package-lock.json
 yarn.lock
+ReleaseTemplate.md
